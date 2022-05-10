@@ -66,8 +66,8 @@
                         </div>
                     </div>
                     <!-- end page title -->
+                    @yield('content')
 
-                  
                     <!-- end row -->
 
 
