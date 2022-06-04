@@ -1,8 +1,8 @@
 @extends('layout')
 @section('css')
 <!-- Datatables css -->
-<link href="assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
-<link href="assets/css/vendor/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
 <div class="row">
@@ -49,11 +49,11 @@
 @endsection
 @section('js')
 <!-- Datatables js -->
-<script src="assets/js/vendor/jquery.dataTables.min.js"></script>
-<script src="assets/js/vendor/dataTables.bootstrap4.js"></script>
-<script src="assets/js/vendor/dataTables.responsive.min.js"></script>
-<script src="assets/js/vendor/responsive.bootstrap4.min.js"></script>
+<script src="{{ asset('assets/js/vendor/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/vendor/dataTables.bootstrap4.js') }}"></script>
+<script src="{{ asset('assets/js/vendor/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('assets/js/vendor/responsive.bootstrap4.min.js') }}"></script>
 
 <!-- Datatable Init js -->
-<script src="assets/js/pages/demo.datatable-init.js"></script>
+<script src="{{ asset('assets/js/pages/demo.datatable-init.js') }}"></script>
 @endsection
