@@ -16,7 +16,7 @@ class CreateTacGiasTable extends Migration
         Schema::create('tac_gias', function (Blueprint $table) {
             $table->id('ma_tac_gia');
             $table->string('ten_tac_gia');
-            $table->string('gioi_thieu');
+            $table->string('gioi_thieu', 500);
 
             $table->string('create_by');
             $table->string('update_by');

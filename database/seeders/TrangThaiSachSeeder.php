@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\TrangThaiSach;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class TrangThaiSachSeeder extends Seeder
 {
@@ -13,6 +17,6 @@ class TrangThaiSachSeeder extends Seeder
      */
     public function run()
     {
-        //
+     TrangThaiSach::factory()->count(10)->create();
     }
 }

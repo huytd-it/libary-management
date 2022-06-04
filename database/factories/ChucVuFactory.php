@@ -14,7 +14,9 @@ class ChucVuFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'ten_chuc_vu' => $this->faker->firstName(),
+            'create_by' => $this->faker->numberBetween(1, 5),
+            'update_by' => $this->faker->numberBetween(1, 5)
         ];
     }
 }

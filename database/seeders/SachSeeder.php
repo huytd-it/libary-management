@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Sach;
+use Database\Factories\SachFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class SachSeeder extends Seeder
 {
@@ -13,6 +17,6 @@ class SachSeeder extends Seeder
      */
     public function run()
     {
-        //
+      Sach::factory()->count(500)->create();
     }
 }

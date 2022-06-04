@@ -14,7 +14,9 @@ class TrangThaiSachFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'ten_trang_thai' => $this->faker->lastName(),
+            'create_by' => $this->faker->numberBetween(1, 15),
+            'update_by' => $this->faker->numberBetween(1, 15)
         ];
     }
 }

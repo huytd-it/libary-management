@@ -14,7 +14,9 @@ class LoaiSachFactory extends Factory
     public function definition()
     {
         return [
-            //
+          'ten_loai_sach' => $this->faker->company(),
+          'create_by' => $this->faker->numberBetween(1, 5),
+          'update_by' => $this->faker->numberBetween(1, 5)
         ];
     }
 }

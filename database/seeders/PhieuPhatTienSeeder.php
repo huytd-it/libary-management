@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PhieuPhatTien;
 use Illuminate\Database\Seeder;
 
 class PhieuPhatTienSeeder extends Seeder
@@ -13,6 +14,6 @@ class PhieuPhatTienSeeder extends Seeder
      */
     public function run()
     {
-        //
+        PhieuPhatTien::factory()->count(200)->create();
     }
 }

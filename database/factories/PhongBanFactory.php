@@ -14,7 +14,10 @@ class PhongBanFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'ten_phong_ban' => $this->faker->lastName(),
+            'ma_nhan_vien' => $this->faker->numberBetween(1, 5),
+            'create_by' => $this->faker->numberBetween(1, 5),
+            'update_by' => $this->faker->numberBetween(1, 5)
         ];
     }
 }

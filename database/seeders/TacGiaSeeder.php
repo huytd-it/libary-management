@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TacGia;
 use Illuminate\Database\Seeder;
 
 class TacGiaSeeder extends Seeder
@@ -13,6 +14,6 @@ class TacGiaSeeder extends Seeder
      */
     public function run()
     {
-        //
+        TacGia::factory()->count(50)->create();
     }
 }

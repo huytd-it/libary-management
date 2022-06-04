@@ -14,7 +14,11 @@ class CreateLoaiSachesTable extends Migration
     public function up()
     {
         Schema::create('loai_saches', function (Blueprint $table) {
-            $table->id();
+            $table->id('ma_loai');
+            $table->string('ten_loai_sach');
+            $table->string('create_by');
+            $table->string('update_by');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

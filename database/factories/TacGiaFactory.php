@@ -14,7 +14,10 @@ class TacGiaFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'ten_tac_gia' => $this->faker->name(),
+            'gioi_thieu' => $this->faker->paragraph(5),
+            'create_by' => $this->faker->numberBetween(1, 15),
+            'update_by' => $this->faker->numberBetween(1, 15)
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PhieuMuonTra;
 use Illuminate\Database\Seeder;
 
 class PhieuMuonTraSeeder extends Seeder
@@ -13,6 +14,6 @@ class PhieuMuonTraSeeder extends Seeder
      */
     public function run()
     {
-        //
+        PhieuMuonTra::factory()->count(100)->create();
     }
 }

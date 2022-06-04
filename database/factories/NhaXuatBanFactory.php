@@ -14,7 +14,9 @@ class NhaXuatBanFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'ten_nxb' => $this->faker->firstName(),
+            'create_by' => $this->faker->numberBetween(1, 5),
+            'update_by' => $this->faker->numberBetween(1, 5)
         ];
     }
 }

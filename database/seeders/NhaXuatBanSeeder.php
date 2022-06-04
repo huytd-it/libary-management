@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\NhaXuatBan;
 use Illuminate\Database\Seeder;
 
 class NhaXuatBanSeeder extends Seeder
@@ -13,6 +14,6 @@ class NhaXuatBanSeeder extends Seeder
      */
     public function run()
     {
-        //
+        NhaXuatBan::factory()->count(50)->create();
     }
 }

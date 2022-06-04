@@ -14,7 +14,10 @@ class PhieuThanhLyFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'ngay_thanh_li' => $this->faker->dateTime(),
+            'ma_doc_gia' => $this->faker->numberBetween(1, 15),
+            'create_by' => $this->faker->numberBetween(1, 5),
+            'update_by' => $this->faker->numberBetween(1, 5)
         ];
     }
 }

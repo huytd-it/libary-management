@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DocGia;
 use Illuminate\Database\Seeder;
 
 class DocGiaSeeder extends Seeder
@@ -13,6 +14,6 @@ class DocGiaSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DocGia::factory()->count(100)->create();
     }
 }
