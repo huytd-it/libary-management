@@ -16,7 +16,7 @@
         <li class="dropdown notification-list topbar-dropdown">
             <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
                 aria-haspopup="false" aria-expanded="false">
-                <img src="assets/images/flags/us.jpg" alt="user-image" class="mr-0 mr-sm-1"
+                <img src="{{asset('assets/images/flags/us.jpg') }}" alt="user-image" class="mr-0 mr-sm-1"
                     height="12">
                 <span class="align-middle d-none d-sm-inline-block">English</span> <i
                     class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
@@ -25,25 +25,25 @@
 
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img src="assets/images/flags/germany.jpg" alt="user-image" class="mr-1"
+                    <img src="{{asset('assets/images/flags/germany.jpg') }}" alt="user-image" class="mr-1"
                         height="12"> <span class="align-middle">German</span>
                 </a>
 
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img src="assets/images/flags/italy.jpg" alt="user-image" class="mr-1"
+                    <img src="{{asset('assets/images/flags/italy.jpg') }}" alt="user-image" class="mr-1"
                         height="12"> <span class="align-middle">Italian</span>
                 </a>
 
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img src="assets/images/flags/spain.jpg" alt="user-image" class="mr-1"
+                    <img src="{{asset('assets/images/flags/spain.jpg') }}" alt="user-image" class="mr-1"
                         height="12"> <span class="align-middle">Spanish</span>
                 </a>
 
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img src="assets/images/flags/russia.jpg" alt="user-image" class="mr-1"
+                    <img src="{{asset('assets/images/flags/russia.jpg') }}" alt="user-image" class="mr-1"
                         height="12"> <span class="align-middle">Russian</span>
                 </a>
 
@@ -93,7 +93,7 @@
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <div class="notify-icon">
-                            <img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle"
+                            <img src="{{asset('assets/images/users/avatar-2.jpg') }}" class="img-fluid rounded-circle"
                                 alt="" />
                         </div>
                         <p class="notify-details">Cristina Pride</p>
@@ -115,7 +115,7 @@
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <div class="notify-icon">
-                            <img src="assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle"
+                            <img src="{{asset('assets/images/users/avatar-4.jpg') }}" class="img-fluid rounded-circle"
                                 alt="" />
                         </div>
                         <p class="notify-details">Karen Robinson</p>
@@ -156,19 +156,19 @@
                     <div class="row no-gutters">
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="assets/images/brands/slack.png" alt="slack">
+                                <img src="{{asset('assets/images/brands/slack..png') }}" alt="slack">
                                 <span>Slack</span>
                             </a>
                         </div>
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="assets/images/brands/github.png" alt="Github">
+                                <img src="{{asset('assets/images/brands/github..png') }}" alt="Github">
                                 <span>GitHub</span>
                             </a>
                         </div>
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="assets/images/brands/dribbble.png" alt="dribbble">
+                                <img src="{{asset('assets/images/brands/dribbble..png') }}" alt="dribbble">
                                 <span>Dribbble</span>
                             </a>
                         </div>
@@ -177,19 +177,19 @@
                     <div class="row no-gutters">
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="assets/images/brands/bitbucket.png" alt="bitbucket">
+                                <img src="{{asset('assets/images/brands/bitbucket..png') }}" alt="bitbucket">
                                 <span>Bitbucket</span>
                             </a>
                         </div>
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="assets/images/brands/dropbox.png" alt="dropbox">
+                                <img src="{{asset('assets/images/brands/dropbox..png') }}" alt="dropbox">
                                 <span>Dropbox</span>
                             </a>
                         </div>
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="assets/images/brands/g-suite.png" alt="G Suite">
+                                <img src="{{asset('assets/images/brands/g-suite..png') }}" alt="G Suite">
                                 <span>G Suite</span>
                             </a>
                         </div>
@@ -210,7 +210,7 @@
             <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#"
                 role="button" aria-haspopup="false" aria-expanded="false">
                 <span class="account-user-avatar">
-                    <img src="assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                    <img src="{{asset('assets/images/users/avatar-1.jpg') }}" alt="user-image" class="rounded-circle">
                 </span>
                 <span>
                     <span class="account-user-name">Dominic Keller</span>
@@ -308,7 +308,7 @@
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                     <div class="media">
-                        <img class="d-flex mr-2 rounded-circle" src="assets/images/users/avatar-2.jpg"
+                        <img class="d-flex mr-2 rounded-circle" src="{{asset('assets/images/users/avatar-2.jpg') }}"
                             alt="Generic placeholder image" height="32">
                         <div class="media-body">
                             <h5 class="m-0 font-14">Erwin Brown</h5>
@@ -320,7 +320,7 @@
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                     <div class="media">
-                        <img class="d-flex mr-2 rounded-circle" src="assets/images/users/avatar-5.jpg"
+                        <img class="d-flex mr-2 rounded-circle" src="{{asset('assets/images/users/avatar-5.jpg') }}"
                             alt="Generic placeholder image" height="32">
                         <div class="media-body">
                             <h5 class="m-0 font-14">Jacob Deo</h5>

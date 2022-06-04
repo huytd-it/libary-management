@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SachController;
+use App\Models\Sach;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +14,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::resource('book', SachController::class);
 
-Route::get('/', function () {
-    return view('books');
+Route::prefix('/book')->group(function () {
+    Route::name('book.')->group(function () {
+        Route::get('/all/get', [SachController::class, 'getAll'])->name('all');
+
+    });
+
 });
