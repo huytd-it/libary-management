@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class NhaXuatBan extends Model
+class LoaiDocGia extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'nha_xuat_bans';
-    protected $primaryKey = 'ma_nxb';
-    protected $fillable = ['ma_nxb', 'ten_nxb', 'create_by', 'update_by'];
+    protected $table = 'loai_doc_gias';
+    protected $primaryKey = 'ma_loai';
+    protected $fillable = ['ma_loai', 'ten_loai', 'create_by', 'update_by'];
 }

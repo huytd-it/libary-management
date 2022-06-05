@@ -14,7 +14,7 @@ class CreatePhieuMuonTrasTable extends Migration
     public function up()
     {
         Schema::create('phieu_muon_tras', function (Blueprint $table) {
-            $table->id('ma_hieu');
+            $table->id('ma_phieu');
             $table->string('ma_doc_gia');
             $table->dateTime('ngay_muon');
             $table->dateTime('ngay_tra');

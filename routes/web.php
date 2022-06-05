@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\SachController;
-use App\Models\Sach;
 use Illuminate\Support\Facades\Route;
 
 /*

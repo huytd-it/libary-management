@@ -16,7 +16,7 @@ class CreateDocGiasTable extends Migration
         Schema::create('doc_gias', function (Blueprint $table) {
             $table->id('ma_doc_gia');
             $table->string('ten_doc_gia');
-            $table->bigInteger('loai_doc_gia');
+            $table->bigInteger('ma_loai');
             $table->dateTime('ngay_sinh');
             $table->string('dia_chi');
             $table->string('email');

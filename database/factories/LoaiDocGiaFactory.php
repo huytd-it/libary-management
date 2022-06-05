@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class LoaiSachFactory extends Factory
+class LoaiDocGiaFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,9 +14,9 @@ class LoaiSachFactory extends Factory
     public function definition()
     {
         return [
-          'ten_loai_sach' => $this->faker->state(),
-          'create_by' => $this->faker->numberBetween(1, 5),
-          'update_by' => $this->faker->numberBetween(1, 5)
+            'ten_loai' => $this->faker->companySuffix(),
+            'create_by' => $this->faker->numberBetween(1, 5),
+            'update_by' => $this->faker->numberBetween(1, 5)
         ];
     }
 }

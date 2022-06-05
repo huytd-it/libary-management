@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTaiKhoansTable extends Migration
+class CreateLoaiDocGiasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTaiKhoansTable extends Migration
      */
     public function up()
     {
-        Schema::create('tai_khoans', function (Blueprint $table) {
-            $table->id('ma_tai_khoan');
-            $table->string('ten_tai_khoan');
-            $table->string('mat_khau');
+        Schema::create('loai_doc_gias', function (Blueprint $table) {
+            $table->id('ma_loai');
+            $table->string('ten_loai');
+
             $table->string('create_by');
             $table->string('update_by');
             $table->timestamps();
@@ -31,6 +31,6 @@ class CreateTaiKhoansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tai_khoans');
+        Schema::dropIfExists('loai_doc_gias');
     }
 }

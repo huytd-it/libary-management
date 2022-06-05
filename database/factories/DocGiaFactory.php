@@ -15,7 +15,7 @@ class DocGiaFactory extends Factory
     {
         return [
             'ten_doc_gia' => $this->faker->name(),
-            'loai_doc_gia' => $this->faker->numberBetween(1, 5),
+            'ma_loai' => $this->faker->numberBetween(1, 5),
             'ngay_sinh' => $this->faker->dateTime(),
             'dia_chi' => $this->faker->address(1, 5),
             'email' => $this->faker->email(),

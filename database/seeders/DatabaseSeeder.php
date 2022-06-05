@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\BangCap;
 use App\Models\ChucVu;
 use App\Models\DocGia;
+use App\Models\LoaiDocGia;
 use App\Models\LoaiSach;
 use App\Models\NhanVien;
 use App\Models\NhaXuatBan;
@@ -41,5 +42,6 @@ class DatabaseSeeder extends Seeder
         TacGia::factory()->count(100)->create();
         TaiKhoan::factory()->count(10)->create();
         TrangThaiSach::factory()->count(100)->create();
+        LoaiDocGia::factory()->count(5)->create();
     }
 }
