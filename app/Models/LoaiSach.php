@@ -10,6 +10,6 @@ class LoaiSach extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'loai_saches';
-    protected $primaryKey = 'ma_loai_sach';
-    protected $fillable = ['ma_loai_sach', 'ten_loai_sach', 'create_by', 'update_by'];
+    protected $primaryKey = 'ma_loai';
+    protected $fillable = ['ma_loai', 'ten_loai_sach', 'create_by', 'update_by'];
 }

@@ -10,7 +10,7 @@ class TaiKhoan extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'tai_khoans';
-    protected $primaryKey = 'ma_tac_gia';
+    protected $primaryKey = 'ma_tai_khoan';
     protected $fillable = ['ma_tai_khoan', 'ten_tai_khoan', 'mat_khau', 'create_by', 'update_by'];
 
 }
