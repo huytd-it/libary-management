@@ -1,8 +1,6 @@
 @extends('layout')
 @section('css')
-    <!-- Datatables css -->
-    <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
+
 @endsection
 @section('content')
     <!-- Full width modal -->
@@ -19,7 +17,7 @@
                     <form action="" id="sach">
                         <div class="row">
                             @csrf
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" style="display:none">
                                 <div class="form-group">
                                     <label for="simpleinput">Mã sách</label>
                                     <input type="text" id="ma_sach" name="ma_sach" class="form-control">
@@ -40,25 +38,45 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="simpleinput">Nhà xuất bản</label>
-                                    <input type="text" id="ma_nxb" name="ma_nxb" class="form-control">
+                                    <select type="text" id="ma_nxb" name="ma_nxb" class="form-control">
+                                        @foreach ($nxb as $item)
+                                            <option value="{{ $item->ma_nxb }}">{{ $item->ten_nxb }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="simpleinput">Loại sách</label>
-                                    <input type="text" id="ma_loai" name="ma_loai" class="form-control">
+                                    <select type="text" id="ma_loai" name="ma_loai" class="form-control">
+                                        @foreach ($loai_sach as $item)
+                                            <option value="{{ $item->ma_loai }}">{{ $item->ten_loai_sach }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="simpleinput">Trạng thái</label>
-                                    <input type="text" id="ma_trang_thai" name="ma_trang_thai" class="form-control">
+                                    <select type="text" id="ma_trang_thai" name="ma_trang_thai" class="form-control">
+                                        @foreach ($trang_thai as $item)
+                                            <option value="{{ $item->ma_trang_thai }}">{{ $item->ten_trang_thai }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="simpleinput">Tac Gia</label>
-                                    <input type="text" id="ma_tac_gia" name="ma_tac_gia" class="form-control">
+                                    <label for="simpleinput">Tác giả</label>
+                                    <select type="text" id="ma_tac_gia" name="ma_tac_gia" class="form-control">
+                                        @foreach ($tac_gia as $item)
+                                            <option value="{{ $item->ma_tac_gia }}">{{ $item->ten_tac_gia }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -79,17 +97,35 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#full-width-modal"> Thêm sách </button>
-                    <table id="books" class="table dt-responsive nowrap w-100">
+
+                    <div class="row mb-2">
+                        <div class="col-sm-4">
+                            <button class="btn btn-success" data-toggle="modal" id="add" data-target="#full-width-modal"><i
+                                    class="mdi mdi-plus-circle mr-2"></i> Thêm sách </button>
+
+
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-sm-right">
+                                <button type="button" class="btn btn-success mb-2 mr-1"><i
+                                        class="mdi mdi-settings"></i></button>
+                                <button type="button" class="btn btn-light mb-2 mr-1">Import</button>
+                                <button type="button" class="btn btn-light mb-2">Export</button>
+                            </div>
+                        </div><!-- end col-->
+                    </div>
+                    <table id="books" class="table dt-responsive nowrap ">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Tên Sách</th>
                                 <th>Tên tác giả</th>
                                 <th>Trạng thái</th>
                                 <th>Loại sách</th>
                                 <th>Nhà xuất bản</th>
                                 <th>Giá tiền</th>
-                                <th></th>
+                                <th>Ngày tạo</th>
+
                             </tr>
                         </thead>
 
@@ -100,11 +136,7 @@
     </div>
 @endsection
 @section('js')
-    <!-- Datatables js -->
-    <script src="{{ asset('assets/js/vendor/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/vendor/dataTables.bootstrap4.js') }}"></script>
-    <script src="{{ asset('assets/js/vendor/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('assets/js/vendor/responsive.bootstrap4.min.js') }}"></script>
+
 
     <!-- Datatable Init js -->
     <script type="text/javascript">
@@ -113,9 +145,14 @@
             processing: true,
             serverSide: true,
             dom: "Bfrtip",
+            lengthMenu: [
+                [10, 25, 50, -1],
+                [10, 25, 50, 'All'],
+            ],
+            pageLength: 0,
             select: true,
             ajax: {
-                url: "{{ route('book.all') }}",
+                url: "{{ route('books.all') }}",
                 type: "GET",
                 dataSrc: function(json) {
                     console.log(json);
@@ -129,309 +166,90 @@
                     data.deleted_at = $("#deleted_at_filter").val();
                 },
             },
+            order: [
+                [7, 'desc']
+            ],
+            "lengthChange": true,
             columns: [{
+                    data: null,
+                    render: function() {
+                        return '<i class="mdi mdi-square-edit-outline btn-edit"></i>';
+                    }
+                }, {
                     data: 'ten_sach'
-                },
-                {
-                    data: 'ten_loai_sach'
-                },
-                {
-                    data: 'ten_nxb'
-                },
-                {
-                    data: 'ten_trang_thai'
                 },
                 {
                     data: 'ten_tac_gia'
                 },
                 {
-                    data: 'gia_tri'
+                    data: 'ten_trang_thai',
+                    render: function(data, meta, row) {
+                        if (row.ma_trang_thai % 2 == 0) {
+                            return '<span class="badge badge-danger-lighten">' + data + '</span>';
+                        } else {
+                            return '<span class=" badge badge-info-lighten">' + data + '</span>';
+
+                        }
+                    }
                 },
                 {
-                    data: null,
-                    render: function() {
-                        return '<button class="btn btn-success"  data-toggle="modal" data-target="#full-width-modal">Sửa</button>';
+                    data: 'ten_loai_sach',
+
+                },
+                {
+                    data: 'ten_nxb'
+                },
+
+
+                {
+                    data: 'gia_tri',
+                    render: function(data) {
+                        return new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                        }).format(data);
                     }
-                }
+                },
+                {
+                    data: 'created_at'
+                },
+
             ],
+            drawCallback: function() {
+                $('#sach select').select2();
+                $(document).on('click', '.btn-edit', function() {
+
+                    var data = table.row($(this).closest("tr")).data();
+                    console.log(data);
+                    for (const [key, value] of Object.entries(data)) {
+                        $('#sach [name=' + key + "]").val(value);
+                    }
+                });
+                $('#add').click(function() {
+                    ('#sach').trigger('reset');
+                });
+            }
+
 
 
         });
+
+
         $('#save_form').click(function() {
             var form_data = new FormData($("#sach")[0]);
 
-            var url = "{{ route('book.store') }}";
+            var url = "{{ route('books.store') }}";
             saveFormData(url, form_data, function(res) {
                 table.ajax.reload();
-                $.toast({
-                    heading: res.msg,
-                    icon: 'success',
-                    loader: true, // Change it to false to disable loader
-                    loaderBg: '#9EC600', // To change the background
-                    position: 'top-center'
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: res.message,
+                    showConfirmButton: false,
+                    timer: 1500
                 });
             });
         });
-
-        function getData(url, callback) {
-            $.ajaxSetup({
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                }
-            });
-            $.ajax({
-                type: "GET",
-                url: url,
-                success: function(data) {
-                    callback(data);
-                },
-                error: function(data) {
-                    response_error(data);
-                }
-            });
-        }
-
-        function response_error(data) {
-            console.log(data);
-            var response = "";
-
-            if (data.responseJSON.message) {
-                Swal.fire("Error", data.responseJSON.message, "error");
-            }
-            Object.values(data.responseJSON.error).forEach(element => {
-                response += element + "<br>";
-            });
-
-            Swal.fire("Error", response, "error");
-        }
-
-        function init() {
-            location.reload();
-        }
-
-        function saveData(data, url, callback = function(res) {
-            console.log(res);
-        }) {
-            try {
-                $.ajaxSetup({
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: data,
-                    success: function(res) {
-
-
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: res.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        callback(res);
-                        $(".modal").modal("hide");
-                    },
-                    error: function(data) {
-                        response_error(data);
-                    }
-                });
-            } catch (err) {
-                alert(err);
-            }
-        }
-
-        function saveDataTable(data, url, table, callback = function() {}) {
-            try {
-                $.ajaxSetup({
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: data,
-                    success: function(data) {
-                        // Swal.fire({
-                        //     position: "top-end",
-                        //     icon: "success",
-                        //     title: data.message,
-                        //     showConfirmButton: false,
-                        //     timer: 1500
-                        // });
-                        // table.ajax.reload();
-                        callback(data);
-                        $(".modal").modal("hide");
-                    },
-                    error: function(data) {
-                        response_error(data);
-                    }
-                });
-            } catch (err) {
-                alert(err);
-            }
-        }
-
-        function saveFormData(url, form_data, callback = function(res) {}) {
-            try {
-                $.ajaxSetup({
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: form_data,
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function(data) {
-                        // Swal.fire({
-                        //     position: "top-end",
-                        //     icon: "warning",
-                        //     title: data.message,
-                        //     showConfirmButton: false,
-                        //     timer: 1500
-                        // });
-
-                        callback(data);
-                        $(".modal").modal("hide");
-                    },
-                    error: function(data) {
-                        $.toast({
-                            heading: 'Error',
-                            icon: 'danger',
-                            text:data.message,
-                            loader: true, // Change it to false to disable loader
-                            loaderBg: '#9EC600', // To change the background
-                            position: 'top-center'
-                        });
-                    }
-                });
-            } catch (err) {
-                alert(err);
-            }
-        }
-
-        function update(url, form_data, callback = init()) {
-            try {
-                $.ajaxSetup({
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                    }
-                });
-                $.ajax({
-                    type: "PUT",
-                    url: url,
-                    data: form_data,
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function(data) {
-                        console.log(data);
-                        Swal.fire("Successfull", data.message, "success");
-
-                        callback();
-                        $(".modal").modal("hide");
-                    },
-                    error: function(data) {
-                        response_error(data);
-                    }
-                });
-            } catch (err) {
-                alert(err);
-            }
-        }
-        //note: api method is DELETE
-        function deleteModel(url, id, category = "category", callback = function() {}) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then(result => {
-                if (result.value) {
-                    $.ajaxSetup({
-                        headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                        }
-                    });
-                    $.ajax({
-                        type: "DELETE",
-                        url: url,
-                        success: function(data) {
-                            Swal.fire("Successfull", data.message, "success");
-                            $("#" + category + "-" + id).remove();
-                        },
-                        error: function(data) {
-                            response_error(data);
-                        }
-                    });
-                }
-            });
-        }
-
-        function clickEditForm(form_edit_id, button, table) {
-            console.log(table.rows().data());
-            console.log($(button).closest("tr"));
-            category = table.row($(button).closest("tr")).data();
-            console.log(category);
-            for (const [key, value] of Object.entries(category)) {
-                if (key !== "password") {
-                    $("#" + form_edit_id + " [name=" + key + "]").val(value);
-                }
-            }
-
-            $("#" + form_edit_id + " select").select2();
-        }
-
-        function setDatatable(
-            option = {
-                table_selector: "table",
-                columns: [],
-                sort: [
-                    [1, "desc"]
-                ],
-                url: "",
-                filter,
-                callback
-            }
-        ) {
-            option.callback = option.callback ? option.callback : function() {};
-            option.sort = option.sort ? option.sort : [
-                [0, "desc"]
-            ];
-
-            return $(option.table_selector).DataTable({
-                retrieve: true,
-                processing: true,
-                serverSide: true,
-                dom: "Plfrtip",
-                ajax: {
-                    url: option.url,
-                    type: "POST",
-                    dataSrc: function(json) {
-                        console.log(json);
-                        return json.data;
-                    },
-                    data: function(data) {
-                        data._token = $("input[name=_token]").val();
-                        data.filter = option.filter;
-                    }
-                },
-                columns: option.columns,
-                aaSorting: option.sort,
-                drawCallback: option.callback
-            });
-        }
     </script>
+    <script src="{{ asset('assets/js/pages/demo.datatable-init.js') }}"></script>
 @endsection

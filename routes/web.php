@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\PhieuMuonTraController;
 use App\Http\Controllers\SachController;
+use App\Models\PhieuMuonTra;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('book', SachController::class);
+Route::resources([
+    'books' => SachController::class,
+    'phieu-muon-tra' => PhieuMuonTraController::class,
+]);
 
-Route::prefix('/book')->group(function () {
-    Route::name('book.')->group(function () {
+Route::prefix('/books')->group(function () {
+    Route::name('books.')->group(function () {
         Route::get('/all/get', [SachController::class, 'getAll'])->name('all');
 
     });

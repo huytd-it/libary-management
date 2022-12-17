@@ -13,11 +13,17 @@
     <!-- third party css -->
     <link href="{{ asset('assets/css/vendor/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet" type="text/css" />
     <!-- third party css end -->
-
+    <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/vendor/buttons.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/vendor/select.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <!-- App css -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="light-style" />
-    <link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="dark-style" />
+    <link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css"
+        id="dark-style" />
+    <!-- Datatables css -->
+
     @yield('css')
 
 </head>
@@ -152,15 +158,30 @@
     <!-- bundle -->
     <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
+   <!-- Datatables js -->
+   <script src="{{ asset('assets/js/vendor/jquery.dataTables.min.js') }}"></script>
+   <script src="{{ asset('assets/js/vendor/dataTables.bootstrap4.js') }}"></script>
+   <script src="{{ asset('assets/js/vendor/dataTables.responsive.min.js') }}"></script>
+   <script src="{{ asset('assets/js/vendor/responsive.bootstrap4.min.js') }}"></script>
+   <script src="{{ asset('assets/js/vendor/dataTables.buttons.min.js ') }}"></script>
+   <script src="{{ asset('assets/js/vendor/buttons.bootstrap4.min.js ') }}"></script>
+   <script src="{{ asset('assets/js/vendor/buttons.html5.min.js ') }}"></script>
+   <script src="{{ asset('assets/js/vendor/buttons.flash.min.js ') }}"></script>
+   <script src="{{ asset('assets/js/vendor/buttons.print.min.js ') }}"></script>
+   <script src="{{ asset('assets/js/vendor/dataTables.select.min.js') }}"></script>
+   <script src="{{ asset('assets/js/vendor/dataTables.keyTable.min.js') }}"></script>
 
+   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="{{ asset('js/jquery.controller.js') }}"></script>
     <!-- third party js -->
     <script src="{{ asset('assets/js/vendor/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/js/vendor/jquery-jvectormap-1.2.2.min.js') }}"></script>
     <script src="{{ asset('assets/js/vendor/jquery-jvectormap-world-mill-en.js') }}"></script>
+
     <!-- third party js ends -->
+    {{-- <script src="{{ asset('assets/js/pages/demo.datatable-init.js') }}"></script> --}}
 
     <!-- demo app -->
-    <script src="{{ asset('assets/js/pages/demo.dashboard.js') }}"></script>
     <!-- end demo js-->
     @yield('js')
 </body>
