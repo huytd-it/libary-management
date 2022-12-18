@@ -27,3 +27,10 @@ Route::prefix('/books')->group(function () {
     });
 
 });
+Route::prefix('/phieu-muon-tra')->group(function () {
+    Route::name('phieu-muon-tra.')->group(function () {
+        Route::get('/all/get', [PhieuMuonTraController::class, 'getAll'])->name('all');
+
+    });
+
+});

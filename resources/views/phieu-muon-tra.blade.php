@@ -1,42 +1,66 @@
 @extends('layout')
 @section('css')
-
 @endsection
 @section('content')
     <!-- Full width modal -->
 
     <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-full-width">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="fullWidthModalLabel">Sách</h4>
+                    <h4 class="modal-title" id="fullWidthModalLabel">Mượn sách</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
                     <form action="" id="sach">
                         <div class="row">
                             @csrf
-                            <div class="col-sm-6" style="display:none">
+                            <div class="col-lg-6" style="display:none">
                                 <div class="form-group">
                                     <label for="simpleinput">Mã sách</label>
-                                    <input type="text" id="ma_sach" name="ma_sach" class="form-control">
+                                    <input type="text" id="ma_phieu" name="ma_phieu" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="simpleinput">Tên sách</label>
-                                    <input type="text" id="ten_sach" name="ten_sach" class="form-control">
+                                    <label for="simpleinput">Sách</label>
+                                    <select type="text" id="ma_sach" name="ma_sach" class="form-control">
+                                        @foreach ($sachs as $item)
+                                            <option value="{{ $item->ma_sach }}">{{ $item->ma_sach }} - {{ $item->ten_sach }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="simpleinput">Giá trị</label>
-                                    <input type="text" id="gia_tri" name="gia_tri" class="form-control">
+                                    <label for="simpleinput">Người mượn</label>
+                                    <select type="text" id="nguoi_muon" name="nguoi_muon" class="form-control">
+                                        @foreach ($doc_gias as $item)
+                                            <option value="{{ $item->ma_doc_gia }}">{{ $item->ma_doc_gia }} - {{ $item->ten_doc_gia }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-
-
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="simpleinput">Tiền phạt</label>
+                                    <input type="text" id="tien_phat_ky_nay" name="tien_phat_ky_nay"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="simpleinput">Trạng thái</label>
+                                    <select type="text" id="trang_thai" name="trang_thai" class="form-control">
+                                        <option value="0">Đã trả</option>
+                                        <option value="1">Mượn</option>
+                                        <option value="2">Đã mất</option>
+                                    </select>
+                                </div>
+                            </div>
 
 
                         </div>
@@ -57,8 +81,8 @@
 
                     <div class="row mb-2">
                         <div class="col-sm-4">
-                            <button class="btn btn-success" data-toggle="modal" id="add" data-target="#full-width-modal"><i
-                                    class="mdi mdi-plus-circle mr-2"></i> Thêm sách </button>
+                            <button class="btn btn-success" data-toggle="modal" id="add"
+                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Mượn sách </button>
 
 
                         </div>
@@ -75,13 +99,14 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Tên Sách</th>
-                                <th>Tên tác giả</th>
-                                <th>Trạng thái</th>
-                                <th>Loại sách</th>
-                                <th>Nhà xuất bản</th>
-                                <th>Giá tiền</th>
-                                <th>Ngày tạo</th>
+                                <th>Người mượn</th>
+                                <th>Ngày mượn</th>
+
+                                <th>Ngày trả</th>
+                                <th>Tiền phạt kỳ này</th>
+                                <th>Người tạo phiếu</th>
+                                <th>Người cập nhật cuối</th>
+
 
                             </tr>
                         </thead>
@@ -105,7 +130,7 @@
                 select: {
                     style: "multi"
                 },
-                keys: !0,
+
                 language: {
                     paginate: {
                         previous: "<i class='mdi mdi-chevron-left'>",
@@ -113,7 +138,7 @@
                     },
                 },
                 ajax: {
-                    url: "{{ route('books.all') }}",
+                    url: "{{ route('phieu-muon-tra.all') }}",
                     type: "GET",
                     dataSrc: function(json) {
                         console.log(json);
@@ -128,7 +153,7 @@
                     },
                 },
                 order: [
-                    [7, 'desc']
+                    [1, 'desc']
                 ],
                 columns: [{
                         data: null,
@@ -136,51 +161,55 @@
                             return '<button class="btn btn-success"><i class="mdi mdi-square-edit-outline btn-edit"></i></button>';
                         }
                     }, {
-                        data: 'ten_sach'
+                        data: 'ten_doc_gia'
                     },
                     {
-                        data: 'ten_tac_gia'
-                    },
-                    {
-                        data: 'ten_trang_thai',
-                        render: function(data, meta, row) {
-                            if (row.ma_trang_thai % 2 == 0) {
-                                return '<span class="badge badge-danger-lighten">' + data +
-                                    '</span>';
-                            } else {
-                                return '<span class=" badge badge-info-lighten">' + data +
-                                    '</span>';
-
-                            }
+                        data: 'ngay_muon',
+                        render: function(data) {
+                            return moment(data).format('DD/MM/YYYY');
                         }
                     },
                     {
-                        data: 'ten_loai_sach',
+                        data: 'ngay_tra',
+                        render: function(data) {
+                            return moment(data).format('DD/MM/YYYY');
+                        }
+                        // render: function(data, meta, row) {
+                        //     if (row.ma_trang_thai % 2 == 0) {
+                        //         return '<span class="badge badge-danger-lighten">' + data +
+                        //             '</span>';
+                        //     } else {
+                        //         return '<span class=" badge badge-info-lighten">' + data +
+                        //             '</span>';
 
+                        //     }
+                        // }
                     },
                     {
-                        data: 'ten_nxb'
-                    },
-
-
-                    {
-                        data: 'gia_tri',
+                        data: 'tien_phat_ky_nay',
                         render: function(data) {
                             return new Intl.NumberFormat('vi-VN', {
                                 style: 'currency',
                                 currency: 'VND',
                             }).format(data);
                         }
+
                     },
                     {
-                        data: 'created_at'
+                        data: 'nguoi_tao'
                     },
+
+
+                    {
+                        data: 'nguoi_cap_nhat',
+
+                    },
+
+
 
                 ],
                 drawCallback: function() {
-                    $(".dataTables_paginate > .pagination").addClass(
-                        "pagination-rounded"
-                    );
+
                     $('#sach select').select2();
                     $(document).on('click', '.btn-edit', function() {
                         $('#full-width-modal').modal('show');
@@ -191,7 +220,7 @@
                         }
                     });
                     $('#add').click(function() {
-                        ('#sach').trigger('reset');
+                        $('#sach')[0].trigger('reset');
                     });
                 }
 

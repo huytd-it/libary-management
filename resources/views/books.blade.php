@@ -7,7 +7,7 @@
 
     <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-full-width">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="fullWidthModalLabel">Sách</h4>
@@ -173,7 +173,7 @@
             columns: [{
                     data: null,
                     render: function() {
-                        return '<i class="mdi mdi-square-edit-outline btn-edit"></i>';
+                        return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline btn-edit"></i></button>';
                     }
                 }, {
                     data: 'ten_sach'
@@ -219,6 +219,7 @@
                 $('#sach select').select2();
                 $(document).on('click', '.btn-edit', function() {
 
+                    $('#full-width-modal').modal('show');
                     var data = table.row($(this).closest("tr")).data();
                     console.log(data);
                     for (const [key, value] of Object.entries(data)) {
@@ -226,7 +227,7 @@
                     }
                 });
                 $('#add').click(function() {
-                    ('#sach').trigger('reset');
+                    $('#sach')[0].trigger('reset');
                 });
             }
 
