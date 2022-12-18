@@ -115,11 +115,11 @@
                 console.log(res);
 
                 Swal.fire({
-                    position: "top-end",
+                    position: "center",
                     icon: "success",
                     title: res.message,
                     showConfirmButton: true,
-                    timer: 2500
+                    timer: 3500
                 }).then(function(result) {
 
                         window.location.href = res.redirect;

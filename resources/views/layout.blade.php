@@ -31,6 +31,13 @@
 <body class="loading"
     data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
     <!-- Begin page -->
+      <!-- Pre-loader -->
+      <div id="preloader">
+        <div id="status">
+            <div class="bouncing-loader"><div ></div><div ></div><div ></div></div>
+        </div>
+    </div>
+    <!-- End Preloader-->
     <div class="wrapper">
         @include('layout.header')
 
