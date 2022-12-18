@@ -16,12 +16,10 @@ class CreatePhieuMuonTrasTable extends Migration
         Schema::create('phieu_muon_tras', function (Blueprint $table) {
             $table->id('ma_phieu');
             $table->string('ma_doc_gia');
+            $table->bigInteger('ma_sach');
             $table->dateTime('ngay_muon');
-            $table->dateTime('ngay_tra');
-            $table->integer('tien_phat_ky_nay');
-
-
-
+            $table->dateTime('ngay_tra')->nullable();
+            $table->integer('tien_phat_ky_nay')->nullable();
             $table->string('create_by');
             $table->string('update_by');
             $table->softDeletes();

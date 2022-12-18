@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::resources([
-    'books' => SachController::class,
+    'sach' => SachController::class,
     'phieu-muon-tra' => PhieuMuonTraController::class,
 ]);
 
-Route::prefix('/books')->group(function () {
-    Route::name('books.')->group(function () {
+Route::prefix('/sach')->group(function () {
+    Route::name('sach.')->group(function () {
         Route::get('/all/get', [SachController::class, 'getAll'])->name('all');
 
     });

@@ -16,9 +16,9 @@
                     <form action="" id="sach">
                         <div class="row">
                             @csrf
-                            <div class="col-lg-6" style="display:none">
+                            <div class="col-lg-6" >
                                 <div class="form-group">
-                                    <label for="simpleinput">Mã sách</label>
+                                    <label for="simpleinput">Mã phiếu</label>
                                     <input type="text" id="ma_phieu" name="ma_phieu" class="form-control">
                                 </div>
                             </div>
@@ -27,7 +27,8 @@
                                     <label for="simpleinput">Sách</label>
                                     <select type="text" id="ma_sach" name="ma_sach" class="form-control">
                                         @foreach ($sachs as $item)
-                                            <option value="{{ $item->ma_sach }}">{{ $item->ma_sach }} - {{ $item->ten_sach }}
+                                            <option value="{{ $item->ma_sach }}">{{ $item->ma_sach }} -
+                                                {{ $item->ten_sach }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -36,9 +37,10 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="simpleinput">Người mượn</label>
-                                    <select type="text" id="nguoi_muon" name="nguoi_muon" class="form-control">
+                                    <select type="text" id="ma_doc_gia" name="ma_doc_gia" class="form-control">
                                         @foreach ($doc_gias as $item)
-                                            <option value="{{ $item->ma_doc_gia }}">{{ $item->ma_doc_gia }} - {{ $item->ten_doc_gia }}
+                                            <option value="{{ $item->ma_doc_gia }}">{{ $item->ma_doc_gia }} -
+                                                {{ $item->ten_doc_gia }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -100,6 +102,7 @@
                             <tr>
                                 <th></th>
                                 <th>Người mượn</th>
+                                <th>Tên sách</th>
                                 <th>Ngày mượn</th>
 
                                 <th>Ngày trả</th>
@@ -153,26 +156,31 @@
                     },
                 },
                 order: [
-                    [1, 'desc']
+                    [0, 'desc']
                 ],
                 columns: [{
-                        data: null,
+                        data: 'ma_phieu',
                         render: function() {
-                            return '<button class="btn btn-success"><i class="mdi mdi-square-edit-outline btn-edit"></i></button>';
+                            return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline "></i></button>';
                         }
-                    }, {
+                    },
+                    {
                         data: 'ten_doc_gia'
                     },
                     {
+                        data: 'ten_sach'
+                    },
+
+                    {
                         data: 'ngay_muon',
                         render: function(data) {
-                            return moment(data).format('DD/MM/YYYY');
+                            return data?  moment(data).format('DD/MM/YYYY') : '';
                         }
                     },
                     {
                         data: 'ngay_tra',
                         render: function(data) {
-                            return moment(data).format('DD/MM/YYYY');
+                            return data?  moment(data).format('DD/MM/YYYY') : '';
                         }
                         // render: function(data, meta, row) {
                         //     if (row.ma_trang_thai % 2 == 0) {
@@ -217,10 +225,15 @@
                         console.log(data);
                         for (const [key, value] of Object.entries(data)) {
                             $('#sach [name=' + key + "]").val(value);
+
+                            $('#sach select[name=' + key + "]").select2();
                         }
+
                     });
                     $('#add').click(function() {
-                        $('#sach')[0].trigger('reset');
+                        $('#sach').trigger('reset');
+                        $('#sach [name=trang_thai]').val(1);
+                        $('#sach select').select2();
                     });
                 }
 
@@ -232,7 +245,7 @@
             $('#save_form').click(function() {
                 var form_data = new FormData($("#sach")[0]);
 
-                var url = "{{ route('books.store') }}";
+                var url = "{{ route('phieu-muon-tra.store') }}";
                 saveFormData(url, form_data, function(res) {
                     table.ajax.reload();
                     Swal.fire({

@@ -53,7 +53,7 @@
                 <li class="side-nav-title side-nav-item">Apps</li>
 
                 <li class="side-nav-item">
-                    <a href="{{ route('books.index') }}" class="side-nav-link">
+                    <a href="{{ route('sach.index') }}" class="side-nav-link">
                         <i class="uil-calender"></i>
                         <span> Sách </span>
                     </a>

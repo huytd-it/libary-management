@@ -17,17 +17,33 @@ function getData(url, callback) {
 }
 
 function response_error(data) {
-    console.log(data);
+
     var response = "";
 
     if (data.responseJSON.message) {
-        Swal.fire("Error", data.responseJSON.message, "error");
+
+        response = data.responseJSON.message;
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: response,
+            showConfirmButton: true,
+
+        });
+
     }
-    Object.values(data.responseJSON.error).forEach(element => {
+    Object.values(data.responseJSON.errors).forEach(element => {
         response += element + "<br>";
     });
 
-    Swal.fire("Error", response, "error");
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: response,
+        showConfirmButton: false,
+        timer: 1500
+    });
+
 }
 
 function init() {
@@ -129,14 +145,7 @@ function saveFormData(url, form_data, callback = function(res) {}) {
                 $(".modal").modal("hide");
             },
             error: function(data) {
-                $.toast({
-                    heading: 'Error',
-                    icon: 'danger',
-                    text: data.message,
-                    loader: true, // Change it to false to disable loader
-                    loaderBg: '#9EC600', // To change the background
-                    position: 'top-center'
-                });
+                response_error(data);
             }
         });
     } catch (err) {

@@ -14,7 +14,8 @@ class PhieuMuonTraFactory extends Factory
     public function definition()
     {
         return [
-            'ma_doc_gia' => $this->faker->numberBetween(1, 5),
+            'ma_doc_gia' => $this->faker->numberBetween(1, 100),
+            'ma_sach' => $this->faker->numberBetween(1, 100),
             'ngay_muon' => $this->faker->dateTime(),
             'ngay_tra' => $this->faker->dateTime(),
             'tien_phat_ky_nay' => $this->faker->numberBetween(1, 335)*10000,
