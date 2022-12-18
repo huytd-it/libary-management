@@ -53,13 +53,13 @@
                 <li class="side-nav-title side-nav-item">Apps</li>
 
                 <li class="side-nav-item">
-                    <a href="{{ route('sach.index') }}" class="side-nav-link">
+                    <a href="{{ route('admin.sach.index') }}" class="side-nav-link">
                         <i class="uil-calender"></i>
                         <span> Sách </span>
                     </a>
                 </li>
                 <li class="side-nav-item">
-                    <a href="{{ route('phieu-muon-tra.index') }}" class="side-nav-link">
+                    <a href="{{ route('admin.phieu-muon-tra.index') }}" class="side-nav-link">
                         <i class="uil-calender"></i>
                         <span> Phiếu mượn trả </span>
                     </a>

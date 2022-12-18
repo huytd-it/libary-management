@@ -1,4 +1,4 @@
-# Quan ly thu vien
+# Quản lý Thư viện
 
 Bước 1: Chạy migration
 
@@ -13,3 +13,6 @@ Bước 3: Chạy Project
 ```javascript
 php artisan serve
 ```
+## Lưu ý
+
+Cài PHP  + Composer

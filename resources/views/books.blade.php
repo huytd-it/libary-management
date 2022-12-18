@@ -152,7 +152,7 @@
             pageLength: 0,
             select: true,
             ajax: {
-                url: "{{ route('sach.all') }}",
+                url: "{{ route('admin.sach.all') }}",
                 type: "GET",
                 dataSrc: function(json) {
                     console.log(json);
@@ -239,7 +239,7 @@
         $('#save_form').click(function() {
             var form_data = new FormData($("#sach")[0]);
 
-            var url = "{{ route('sach.store') }}";
+            var url = "{{ route('admin.sach.store') }}";
             saveFormData(url, form_data, function(res) {
                 table.ajax.reload();
                 Swal.fire({

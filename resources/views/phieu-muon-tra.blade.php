@@ -141,7 +141,7 @@
                     },
                 },
                 ajax: {
-                    url: "{{ route('phieu-muon-tra.all') }}",
+                    url: "{{ route('admin.phieu-muon-tra.all') }}",
                     type: "GET",
                     dataSrc: function(json) {
                         console.log(json);
@@ -245,7 +245,7 @@
             $('#save_form').click(function() {
                 var form_data = new FormData($("#sach")[0]);
 
-                var url = "{{ route('phieu-muon-tra.store') }}";
+                var url = "{{ route('admin.phieu-muon-tra.store') }}";
                 saveFormData(url, form_data, function(res) {
                     table.ajax.reload();
                     Swal.fire({
