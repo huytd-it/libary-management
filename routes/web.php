@@ -3,6 +3,7 @@
 use App\Http\Controllers\DangNhapController;
 use App\Http\Controllers\PhieuMuonTraController;
 use App\Http\Controllers\SachController;
+use App\Http\Controllers\TaiKhoanController;
 use App\Models\PhieuMuonTra;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,7 @@ Route::middleware(['web', 'guest'])->group(function () {
                 Route::resources([
                     'sach' => SachController::class,
                     'phieu-muon-tra' => PhieuMuonTraController::class,
+                    'tai-khoan' => TaiKhoanController::class
                 ]);
 
                 Route::prefix('/sach')->group(function () {

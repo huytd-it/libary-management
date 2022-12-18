@@ -61,7 +61,13 @@
                 <li class="side-nav-item">
                     <a href="{{ route('admin.phieu-muon-tra.index') }}" class="side-nav-link">
                         <i class="uil-calender"></i>
-                        <span> Phiếu mượn trả </span>
+                        <span> Mượn trả </span>
+                    </a>
+                </li>
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.tai-khoan.index') }}" class="side-nav-link">
+                        <i class="uil-calender"></i>
+                        <span> Tài khoản </span>
                     </a>
                 </li>
 
