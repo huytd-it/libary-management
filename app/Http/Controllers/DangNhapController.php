@@ -21,7 +21,7 @@ class DangNhapController extends Controller
 
 
 
-        if (Auth::attempt(['ten_tai_khoan' => $username, 'password' => $password], $remember)) {
+        if (Auth::attempt(['ten_tai_khoan' => $username, 'password' => $password, 'trang_thai' => 1], $remember)) {
             return response()->json([
                 'message' => 'Đăng nhập thành công',
                 'redirect' => route('admin.sach.index')

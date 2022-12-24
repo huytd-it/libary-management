@@ -60,7 +60,7 @@
                                     <label for="simpleinput">Trạng thái</label>
                                     <select type="text" id="trang_thai" name="trang_thai" class="form-control">
                                         <option value="1">Đang hoạt động</option>
-                                        <option value="0">Khoá</option>
+                                        <option value="2">Đã Khoá</option>
 
                                     </select>
                                 </div>

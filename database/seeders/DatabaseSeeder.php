@@ -28,20 +28,42 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        BangCap::factory()->count(10)->create();
-        ChucVu::factory()->count(5)->create();
         DocGia::factory()->count(100)->create();
-        LoaiSach::factory()->count(50)->create();
-        NhanVien::factory()->count(50)->create();
+        Sach::factory()->count(500)->create();
+        TaiKhoan::factory()->count(5)->create();
+        PhieuMuonTra::factory()->count(100)->create();
         NhaXuatBan::factory()->count(50)->create();
-        PhieuMuonTra::factory()->count(500)->create();
-        PhieuPhatTien::factory()->count(500)->create();
-        PhieuThanhLy::factory()->count(500)->create();
-        PhongBan::factory()->count(10)->create();
-        Sach::factory()->count(300)->create();
-        TacGia::factory()->count(100)->create();
-        TaiKhoan::factory()->count(10)->create();
-        TrangThaiSach::factory()->count(100)->create();
-        LoaiDocGia::factory()->count(5)->create();
+        TacGia::factory()->count(50)->create();
+        LoaiSach::create([
+            'ten_loai_sach' => 'A',
+            'create_by' => 1,
+            'update_by' => 1,
+        ]);
+        LoaiSach::create([
+            'ten_loai_sach' => 'B',
+            'create_by' => 1,
+            'update_by' => 1,
+        ]);
+        LoaiSach::create([
+            'ten_loai_sach' => 'C',
+            'create_by' => 1,
+            'update_by' => 1,
+        ]);
+        TrangThaiSach::create([
+            'ten_trang_thai' => 'Đã mất',
+            'create_by' => 1,
+            'update_by' => 1,
+        ]);
+        TrangThaiSach::create([
+            'ten_trang_thai' => 'Đã hết hạn',
+            'create_by' => 1,
+            'update_by' => 1,
+
+        ]);
+        TrangThaiSach::create([
+            'ten_trang_thai' => 'Đã thanh lý',
+            'create_by' => 1,
+            'update_by' => 1,
+        ]);
     }
 }

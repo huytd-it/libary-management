@@ -14,7 +14,7 @@ class LoaiSachFactory extends Factory
     public function definition()
     {
         return [
-          'ten_loai_sach' => $this->faker->state(),
+          'ten_loai_sach' => $this->faker->word(),
           'create_by' => $this->faker->numberBetween(1, 5),
           'update_by' => $this->faker->numberBetween(1, 5)
         ];

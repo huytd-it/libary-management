@@ -16,6 +16,9 @@ class TaiKhoanFactory extends Factory
     {
         return [
             'ten_tai_khoan' => $this->faker->userName(),
+            'ho_ten' => $this->faker->name(),
+            'ma_vai_tro' => $this->faker->numberBetween(1, 2),
+            'trang_thai' => $this->faker->numberBetween(1, 2),
             'mat_khau' => Hash::make('lsts@123'),
             'create_by' => $this->faker->numberBetween(1, 15),
             'update_by' => $this->faker->numberBetween(1, 15)

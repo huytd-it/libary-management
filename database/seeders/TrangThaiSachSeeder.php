@@ -17,6 +17,22 @@ class TrangThaiSachSeeder extends Seeder
      */
     public function run()
     {
-     TrangThaiSach::factory()->count(10)->create();
+
+        TrangThaiSach::create([
+            'ten_trang_thai' => 'A',
+            'create_by' => 1,
+            'update_by' => 1,
+        ]);
+        TrangThaiSach::create([
+            'ten_trang_thai' => 'B',
+            'create_by' => 1,
+            'update_by' => 1,
+
+        ]);
+        TrangThaiSach::create([
+            'ten_trang_thai' => 'C',
+            'create_by' => 1,
+            'update_by' => 1,
+        ]);
     }
 }

@@ -8,7 +8,10 @@ use App\Models\Sach;
 use App\Models\TacGia;
 use App\Models\TrangThaiSach;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class SachController extends Controller
@@ -17,13 +20,14 @@ class SachController extends Controller
     {
         $book = DB::table('saches as S')
             ->join('tac_gias as T', 'T.ma_tac_gia', '=', 'S.ma_tac_gia')
-            ->join('trang_thai_saches as TT', 'TT.ma_trang_thai', '=', 'S.ma_trang_thai')
-            ->join('nha_xuat_bans as N', 'N.ma_nxb', '=', 'S.ma_nxb')
-            ->join('loai_saches as LS', 'LS.ma_loai', '=', 'S.ma_loai')
+            ->leftJoin('trang_thai_saches as TT', 'TT.ma_trang_thai', '=', 'S.ma_trang_thai')
+            ->leftJoin('nha_xuat_bans as N', 'N.ma_nxb', '=', 'S.ma_nxb')
+            ->leftJoin('loai_saches as LS', 'LS.ma_loai', '=', 'S.ma_loai')
             ->select([
                 'S.*', 'T.ten_tac_gia', 'T.ma_tac_gia', 'TT.ten_trang_thai',
                 'TT.ma_trang_thai', 'N.ten_nxb', 'N.ma_nxb', 'LS.ma_loai', 'LS.ten_loai_sach'
             ])
+            ->orderByDesc('S.ma_sach')
             ->get();
 
         return DataTables::of($book)->make(true);
@@ -47,6 +51,28 @@ class SachController extends Controller
     public function store(Request $request)
     {
 
+       // QĐ2: Có 3 thể loại (A, B, C). Chỉ nhận các sách trong vòng 8 năm.
+        $validator = Validator::make($request->all(), [
+            'ten_sach' => 'required',
+            'ma_tac_gia' => 'required',
+            'ma_trang_thai' => 'required',
+            'ma_loai' => 'required',
+            'gia_tri' => 'required',
+            'ma_nxb' => 'required',
+            'nam_xuat_ban' =>'required'
+        ]);
+        if(count($validator->errors()) > 0) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        //nhận sách trong vòng 8 năm
+        $nam_xuat_ban = Carbon::parse($request->nam_xuat_ban);
+        $tuoi = $nam_xuat_ban->diffInYears(Carbon::now());
+
+        if($tuoi <= 8) {
+            return response()->json(['message' => 'Chỉ nhận sách tròng vòng 8 năm'], 400);
+        }
+        $user = Auth::user();
         $exist = Sach::where('ma_sach', $request->ma_sach)->first();
         if (isset($exist)) {
             $msg = ['message' => 'Cập nhật sách thành công'];
@@ -58,11 +84,12 @@ class SachController extends Controller
             'ma_tac_gia' => $request->ma_tac_gia,
             'ma_trang_thai' => $request->ma_trang_thai,
             'ma_nxb' => $request->ma_nxb,
+            'nam_xuat_ban' => $request->nam_xuat_ban,
             'ma_loai' => $request->ma_loai,
             'gia_tri' => $request->gia_tri,
             'ma_nhan_vien' => "1",
-            'create_by' => "1",
-            'update_by' => "1",
+            'create_by' => $user->ma_tai_khoan,
+            'update_by' => $user->ma_tai_khoan,
         ]);
 
 

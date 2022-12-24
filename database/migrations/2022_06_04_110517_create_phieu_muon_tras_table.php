@@ -18,6 +18,7 @@ class CreatePhieuMuonTrasTable extends Migration
             $table->string('ma_doc_gia');
             $table->bigInteger('ma_sach');
             $table->dateTime('ngay_muon');
+            $table->integer('ma_trang_thai');
             $table->dateTime('ngay_tra')->nullable();
             $table->integer('tien_phat_ky_nay')->nullable();
             $table->string('create_by');

@@ -35,6 +35,7 @@ class PhieuMuonTraController extends Controller
     public function store(Request $request)
     {
 
+        //QĐ4: Chỉ cho mƣợn với thẻ còn hạn và sách không có ngƣời đang mƣợn. Mỗi độc giả mƣợn tối đa 5 quyển sách trong 4 ngày.
         $exist = PhieuMuonTra::where('ma_phieu', $request->ma_phieu)->first();
         if (isset($exist)) {
             $msg = ['message' => 'Cập nhật Phiếu mượn trả thành công'];
@@ -44,6 +45,7 @@ class PhieuMuonTraController extends Controller
         $phieu_data = [
             'ma_sach' => $request->ma_sach,
             'ma_doc_gia' => $request->ma_doc_gia,
+            'ma_trang_thai' => $request->ma_trang_thai,
             'tien_phat_ky_nay' => $request->tien_phat_ky_nay,
             'create_by' => 1,
             'update_by' => 1

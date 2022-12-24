@@ -1,6 +1,5 @@
 @extends('layout')
 @section('css')
-
 @endsection
 @section('content')
     <!-- Full width modal -->
@@ -17,7 +16,7 @@
                     <form action="" id="sach">
                         <div class="row">
                             @csrf
-                            <div class="col-sm-6" style="display:none">
+                            <div class="col-sm-6" hidden>
                                 <div class="form-group">
                                     <label for="simpleinput">Mã sách</label>
                                     <input type="text" id="ma_sach" name="ma_sach" class="form-control">
@@ -33,6 +32,12 @@
                                 <div class="form-group">
                                     <label for="simpleinput">Giá trị</label>
                                     <input type="text" id="gia_tri" name="gia_tri" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="simpleinput">Năm xuất bản</label>
+                                    <input type="text" id="nam_xuat_ban" name="nam_xuat_ban" class="form-control">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -100,8 +105,7 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control form-control-light"
-                                    id="dash-daterange">
+                                <input type="text" class="form-control form-control-light" id="dash-daterange">
                                 <div class="input-group-append">
                                     <span class="input-group-text bg-success border-success text-white">
                                         <i class="mdi mdi-calendar-range font-13"></i>
@@ -125,19 +129,20 @@
 
                     <div class="row mb-2">
                         <div class="col-sm-4">
-                            <button class="btn btn-success" data-toggle="modal" id="add" data-target="#full-width-modal"><i
-                                    class="mdi mdi-plus-circle mr-2"></i> Thêm sách </button>
+                            <button class="btn btn-success" data-toggle="modal" id="add"
+                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm sách
+                            </button>
 
 
                         </div>
-                        <div class="col-sm-8">
+                        {{-- <div class="col-sm-8">
                             <div class="text-sm-right">
                                 <button type="button" class="btn btn-success mb-2 mr-1"><i
                                         class="mdi mdi-settings"></i></button>
                                 <button type="button" class="btn btn-light mb-2 mr-1">Import</button>
                                 <button type="button" class="btn btn-light mb-2">Export</button>
                             </div>
-                        </div><!-- end col-->
+                        </div><!-- end col--> --}}
                     </div>
                     <table id="books" class="table dt-responsive nowrap ">
                         <thead>
@@ -148,8 +153,10 @@
                                 <th>Trạng thái</th>
                                 <th>Loại sách</th>
                                 <th>Nhà xuất bản</th>
+                                <th>Năm xuất bản</th>
                                 <th>Giá tiền</th>
                                 <th>Ngày tạo</th>
+                                <th>Ngày cập nhật</th>
 
                             </tr>
                         </thead>
@@ -161,8 +168,6 @@
     </div>
 @endsection
 @section('js')
-
-
     <!-- Datatable Init js -->
     <script type="text/javascript">
         var table = $('#books').DataTable({
@@ -192,7 +197,7 @@
                 },
             },
             order: [
-                [7, 'desc']
+                [9, 'desc']
             ],
             "lengthChange": true,
             columns: [{
@@ -225,7 +230,12 @@
                     data: 'ten_nxb'
                 },
 
-
+                {
+                    data: 'nam_xuat_ban',
+                    render: function(data) {
+                        return data ? moment(data).format('DD/MM/YYYY') : '';
+                    }
+                },
                 {
                     data: 'gia_tri',
                     render: function(data) {
@@ -237,6 +247,9 @@
                 },
                 {
                     data: 'created_at'
+                },
+                {
+                    data: 'updated_at'
                 },
 
             ],
@@ -250,6 +263,8 @@
                     for (const [key, value] of Object.entries(data)) {
                         $('#sach [name=' + key + "]").val(value);
                     }
+                    $('#nam_xuat_ban').data('daterangepicker').setStartDate(new Date(data
+                        .nam_xuat_ban));
                 });
                 $('#add').click(function() {
                     $('#sach')[0].trigger('reset');
@@ -259,11 +274,18 @@
 
 
         });
-
+        $('#nam_xuat_ban').daterangepicker({
+            "singleDatePicker": true,
+            "autoApply": true,
+            "startDate": moment(),
+            locale: {
+                format: 'DD/MM/YYYY'
+            },
+        });
 
         $('#save_form').click(function() {
             var form_data = new FormData($("#sach")[0]);
-
+            form_data.set('nam_xuat_ban',$('#nam_xuat_ban').data('daterangepicker').startDate.format('YYYY-MM-DD hh:mm:ss') );
             var url = "{{ route('admin.sach.store') }}";
             saveFormData(url, form_data, function(res) {
                 table.ajax.reload();

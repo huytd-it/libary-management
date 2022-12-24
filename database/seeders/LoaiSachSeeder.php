@@ -14,6 +14,6 @@ class LoaiSachSeeder extends Seeder
      */
     public function run()
     {
-        LoaiSach::factory()->count(50)->create();
+        LoaiSach::factory()->count(3)->create();
     }
 }

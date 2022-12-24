@@ -17,6 +17,6 @@ class SachSeeder extends Seeder
      */
     public function run()
     {
-      Sach::factory()->count(500)->create();
+      Sach::factory()->count(200)->create();
     }
 }

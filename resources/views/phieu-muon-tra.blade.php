@@ -16,7 +16,7 @@
                     <form action="" id="sach">
                         <div class="row">
                             @csrf
-                            <div class="col-lg-6" >
+                            <div class="col-lg-6" hidden>
                                 <div class="form-group">
                                     <label for="simpleinput">Mã phiếu</label>
                                     <input type="text" id="ma_phieu" name="ma_phieu" class="form-control">
@@ -56,10 +56,10 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="simpleinput">Trạng thái</label>
-                                    <select type="text" id="trang_thai" name="trang_thai" class="form-control">
-                                        <option value="0">Đã trả</option>
-                                        <option value="1">Mượn</option>
-                                        <option value="2">Đã mất</option>
+                                    <select type="text" id="ma_trang_thai" name="ma_trang_thai" class="form-control">
+                                        <option value="1">Đã trả</option>
+                                        <option value="2" selected>Đã Mượn</option>
+                                        <option value="3">Đã mất</option>
                                     </select>
                                 </div>
                             </div>
@@ -113,14 +113,14 @@
 
 
                         </div>
-                        <div class="col-sm-8">
+                        {{-- <div class="col-sm-8">
                             <div class="text-sm-right">
                                 <button type="button" class="btn btn-success mb-2 mr-1"><i
                                         class="mdi mdi-settings"></i></button>
                                 <button type="button" class="btn btn-light mb-2 mr-1">Import</button>
                                 <button type="button" class="btn btn-light mb-2">Export</button>
                             </div>
-                        </div><!-- end col-->
+                        </div><!-- end col--> --}}
                     </div>
                     <table id="basic-datatable" class="table dt-responsive nowrap ">
                         <thead>
@@ -190,7 +190,18 @@
                         }
                     },
                     {
-                        data: 'ten_doc_gia'
+                        data: 'ten_doc_gia',
+                          render: function(data, meta, row) {
+                            console.log(row.ma_trang_thai);
+                            if (row.ma_trang_thai  == 1) {
+                                return data +  '<br><span class="badge badge-success-lighten">Đã trả</span>';
+                            } if (row.ma_trang_thai  == 2) {
+                                return data + '<br><span class="badge badge-warning-lighten">Đã mượn</span>';
+                            } else {
+                                return data + '<br><span class="badge badge-danger-lighten">Đã mất</span>';
+
+                            }
+                        }
                     },
                     {
                         data: 'ten_sach'
