@@ -10,8 +10,7 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control form-control-light"
-                                    id="dash-daterange">
+                                <input type="text" class="form-control form-control-light" id="dash-daterange">
                                 <div class="input-group-append">
                                     <span class="input-group-text bg-success border-success text-white">
                                         <i class="mdi mdi-calendar-range font-13"></i>
@@ -33,14 +32,14 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="fullWidthModalLabel">Tài khoản</h4>
+                    <h4 class="modal-title" id="fullWidthModalLabel">Độc giả</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
                     <form action="" id="sach">
                         <div class="row">
                             @csrf
-                            <div class="col-lg-6" hidden >
+                            <div class="col-lg-6" >
                                 <div class="form-group">
                                     <label for="simpleinput">Mã độc giả</label>
                                     <input type="text" id="ma_doc_gia" name="ma_doc_gia" class="form-control">
@@ -66,6 +65,12 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
+                                    <label for="simpleinput">Email </label>
+                                    <input type="email" id="email" name="email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
                                     <label for="simpleinput">Ngày lập thẻ </label>
                                     <input type="text" id="created_at" name="created_at" class="form-control">
                                 </div>
@@ -73,9 +78,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="simpleinput">Loại độc giả</label>
-                                    <select type="text" id="loai_doc_gia" name="loai_doc_gia" class="form-control">
-                                        <option value="1">Admin</option>
-                                        <option value="2">Nhân viên</option>
+                                    <select type="text" id="ma_loai" name="ma_loai" class="form-control">
+                                        <option value="1">Loại X</option>
+                                        <option value="2">Loại Y</option>
                                         {{-- @foreach ($doc_gias as $item)
                                             <option value="{{ $item->ma_doc_gia }}">{{ $item->ma_doc_gia }} -
                                                 {{ $item->ten_doc_gia }}
@@ -107,7 +112,8 @@
                     <div class="row mb-2">
                         <div class="col-sm-4">
                             <button class="btn btn-success" data-toggle="modal" id="add"
-                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm độc giả </button>
+                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm độc giả
+                            </button>
 
 
                         </div>
@@ -187,11 +193,14 @@
                     {
                         data: 'ngay_sinh',
                         render: function(data) {
-                            return data?  moment(data).format('DD/MM/YYYY') : '';
+                            return data ? moment(data).format('DD/MM/YYYY') : '';
                         }
                     },
                     {
                         data: 'ma_loai',
+                        render: function(data) {
+                            return data == 1 ? 'Loại X' : 'Loại Y';
+                        }
 
                     },
                     {
@@ -206,7 +215,7 @@
                     {
                         data: 'created_at',
                         render: function(data) {
-                            return data?  moment(data).format('DD/MM/YYYY') : '';
+                            return data ? moment(data).format('DD/MM/YYYY') : '';
                         }
                     },
 
@@ -219,30 +228,57 @@
                         $('#full-width-modal').modal('show');
                         $('#sach').trigger('reset');
                         var data = table.row($(this).closest("tr")).data();
-                        console.log(data);
+
                         for (const [key, value] of Object.entries(data)) {
                             $('#sach [name=' + key + "]").val(value);
 
                             $('#sach select[name=' + key + "]").select2();
                         }
 
+
+                        $('#ngay_sinh').data('daterangepicker').setStartDate(new Date(data
+                            .ngay_sinh));
+                        $('#created_at').data('daterangepicker').setStartDate(new Date(data
+                            .created_at));
+
                     });
-                    $('#add').click(function() {
-                        $('#sach').trigger('reset');
-                        $('#sach [name=trang_thai]').val(1);
-                        $('#sach select').select2();
-                    });
+                    // $('#add').click(function() {
+                    //     $('#sach').trigger('reset');
+                    //     $('#sach [name=trang_thai]').val(1);
+                    //     $('#sach select').select2();
+                    // });
                 }
 
 
 
             });
+            $('#full-width-modal').on('show.bs.modal', function(e) {
+                $('#sach').trigger('reset');
+                $('#sach [name=trang_thai]').val(1);
+                $('#sach select').select2();
+                $('#ngay_sinh').daterangepicker({
+                    "singleDatePicker": true,
+                    "autoApply": true,
+                    locale: {
+                        format: 'DD/MM/YYYY'
+                    },
+                });
+                $('#created_at').daterangepicker({
+                    "singleDatePicker": true,
+                    "autoApply": true,
+                    "startDate": moment(),
+                    locale: {
+                        format: 'DD/MM/YYYY'
+                    },
+                });
 
+            });
 
             $('#save_form').click(function() {
                 var form_data = new FormData($("#sach")[0]);
-
-                var url = "{{ route('admin.tai-khoan.store') }}";
+                form_data.set('created_at',$('#created_at').data('daterangepicker').startDate.format('YYYY-MM-DD hh:mm:ss'));
+                form_data.set('ngay_sinh',$('#ngay_sinh').data('daterangepicker').startDate.format('YYYY-MM-DD hh:mm:ss') );
+                var url = "{{ route('admin.doc-gia.store') }}";
                 saveFormData(url, form_data, function(res) {
                     table.ajax.reload();
                     Swal.fire({

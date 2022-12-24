@@ -39,7 +39,8 @@ function response_error(data) {
     Swal.fire({
         position: "center",
         icon: "error",
-        title: response,
+        title: "Lỗi",
+        html: response,
         showConfirmButton: true,
 
     });
