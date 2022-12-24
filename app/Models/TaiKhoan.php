@@ -12,7 +12,7 @@ class TaiKhoan extends Authenticatable
     use HasFactory, SoftDeletes;
     protected $table = 'tai_khoans';
     protected $primaryKey = 'ma_tai_khoan';
-    protected $fillable = ['ma_tai_khoan', 'ten_tai_khoan', 'mat_khau', 'create_by', 'update_by'];
+    protected $fillable = ['ma_tai_khoan', 'ten_tai_khoan', 'mat_khau', 'create_by', 'update_by', 'trang_thai', 'ma_vai_tro', 'ho_ten'];
     protected $hidden = [
         'mat_khau'
 

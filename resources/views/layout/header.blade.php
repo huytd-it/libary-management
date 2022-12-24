@@ -26,7 +26,7 @@
             <!--- Sidemenu -->
             <ul class="metismenu side-nav">
 
-                <li class="side-nav-title side-nav-item">Navigation</li>
+                {{-- <li class="side-nav-title side-nav-item">Navigation</li>
 
                 <li class="side-nav-item">
                     <a href="javascript: void(0);" class="side-nav-link">
@@ -50,35 +50,40 @@
                     </ul>
                 </li>
 
-                <li class="side-nav-title side-nav-item">Apps</li>
+                <li class="side-nav-title side-nav-item">Apps</li> --}}
 
                 <li class="side-nav-item">
                     <a href="{{ route('admin.sach.index') }}" class="side-nav-link">
-                        <i class="uil-calender"></i>
+                        <i class=" uil-books"></i>
                         <span> Sách </span>
                     </a>
                 </li>
                 <li class="side-nav-item">
                     <a href="{{ route('admin.phieu-muon-tra.index') }}" class="side-nav-link">
-                        <i class="uil-calender"></i>
+                        <i class=" uil-exchange"></i>
                         <span> Mượn trả </span>
                     </a>
                 </li>
                 <li class="side-nav-item">
                     <a href="{{ route('admin.tai-khoan.index') }}" class="side-nav-link">
-                        <i class="uil-calender"></i>
+                        <i class="uil uil-user"></i>
                         <span> Tài khoản </span>
                     </a>
                 </li>
-
                 <li class="side-nav-item">
+                    <a href="{{ route('admin.doc-gia.index') }}" class="side-nav-link">
+                        <i class="uil  uil-book-reader"></i>
+                        <span> Độc giả </span>
+                    </a>
+                </li>
+                {{-- <li class="side-nav-item">
                     <a href="apps-chat.html" class="side-nav-link">
                         <i class="uil-comments-alt"></i>
                         <span> Chat </span>
                     </a>
-                </li>
+                </li> --}}
 
-                <li class="side-nav-item">
+                {{-- <li class="side-nav-item">
                     <a href="javascript: void(0);" class="side-nav-link">
                         <i class="uil-store"></i>
                         <span> Ecommerce </span>
@@ -459,9 +464,9 @@
                             <a href="form-editors.html">Editors</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li class="side-nav-item">
+                {{-- <li class="side-nav-item">
                     <a href="javascript: void(0);" class="side-nav-link">
                         <i class="uil-chart"></i>
                         <span> Charts </span>
@@ -557,9 +562,9 @@
                             <a href="maps-vector.html">Vector Maps</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li class="side-nav-item">
+                {{-- <li class="side-nav-item">
                     <a href="javascript: void(0);" class="side-nav-link">
                         <i class="uil-folder-plus"></i>
                         <span> Multi Level </span>
@@ -603,12 +608,12 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
             </ul>
 
             <!-- Help Box -->
-            <div class="help-box text-white text-center">
+            {{-- <div class="help-box text-white text-center">
                 <a href="javascript: void(0);" class="float-right close-btn text-white">
                     <i class="mdi mdi-close"></i>
                 </a>
@@ -616,7 +621,7 @@
                 <h5 class="mt-3">Unlimited Access</h5>
                 <p class="mb-3">Upgrade to plan to get access to unlimited reports</p>
                 <a href="javascript: void(0);" class="btn btn-outline-light btn-sm">Upgrade</a>
-            </div>
+            </div> --}}
             <!-- end Help Box -->
             <!-- End Sidebar -->
 

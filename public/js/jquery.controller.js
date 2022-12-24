@@ -37,11 +37,11 @@ function response_error(data) {
     });
 
     Swal.fire({
-        position: "top-end",
-        icon: "success",
+        position: "center",
+        icon: "error",
         title: response,
-        showConfirmButton: false,
-        timer: 1500
+        showConfirmButton: true,
+
     });
 
 }

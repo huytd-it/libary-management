@@ -20,7 +20,6 @@ class CreateDocGiasTable extends Migration
             $table->dateTime('ngay_sinh');
             $table->string('dia_chi');
             $table->string('email');
-
             $table->string('create_by');
             $table->string('update_by');
             $table->timestamps();

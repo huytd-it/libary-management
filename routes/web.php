@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\DangNhapController;
+use App\Http\Controllers\DocGiaController;
 use App\Http\Controllers\PhieuMuonTraController;
 use App\Http\Controllers\SachController;
 use App\Http\Controllers\TaiKhoanController;
-use App\Models\PhieuMuonTra;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,7 +40,8 @@ Route::middleware(['web', 'guest'])->group(function () {
                 Route::resources([
                     'sach' => SachController::class,
                     'phieu-muon-tra' => PhieuMuonTraController::class,
-                    'tai-khoan' => TaiKhoanController::class
+                    'tai-khoan' => TaiKhoanController::class,
+                    'doc-gia' => DocGiaController::class
                 ]);
 
                 Route::prefix('/sach')->group(function () {
@@ -51,6 +52,16 @@ Route::middleware(['web', 'guest'])->group(function () {
                 Route::prefix('/phieu-muon-tra')->group(function () {
                     Route::name('phieu-muon-tra.')->group(function () {
                         Route::get('/all/get', [PhieuMuonTraController::class, 'getAll'])->name('all');
+                    });
+                });
+                Route::prefix('/tai-khoan')->group(function () {
+                    Route::name('tai-khoan.')->group(function () {
+                        Route::get('/all/get', [TaiKhoanController::class, 'getAll'])->name('all');
+                    });
+                });
+                Route::prefix('/doc-gia')->group(function () {
+                    Route::name('doc-gia.')->group(function () {
+                        Route::get('/all/get', [DocGiaController::class, 'getAll'])->name('all');
                     });
                 });
             }

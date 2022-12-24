@@ -3,81 +3,6 @@
 @endsection
 @section('content')
     <!-- Full width modal -->
-
-    <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="fullWidthModalLabel">Tài khoản</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body">
-                    <form action="" id="sach">
-                        <div class="row">
-                            @csrf
-                            <div class="col-lg-6" hidden >
-                                <div class="form-group">
-                                    <label for="simpleinput">Mã tài khoản</label>
-                                    <input type="text" id="ma_tai_khoan" name="ma_tai_khoan" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="simpleinput">Tên đăng nhập</label>
-                                    <input type="text" id="ten_tai_khoan" name="ten_tai_khoan" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="simpleinput">Họ và tên</label>
-                                    <input type="text" id="ho_ten" name="ho_ten" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="simpleinput">Mật khẩu</label>
-                                    <input type="text" id="mat_khau" name="mat_khau" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="simpleinput">Loại tài khoản</label>
-                                    <select type="text" id="ma_vai_tro" name="ma_vai_tro" class="form-control">
-                                        <option value="1">Admin</option>
-                                        <option value="2">Nhân viên</option>
-                                        {{-- @foreach ($doc_gias as $item)
-                                            <option value="{{ $item->ma_doc_gia }}">{{ $item->ma_doc_gia }} -
-                                                {{ $item->ten_doc_gia }}
-                                            </option>
-                                        @endforeach --}}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="simpleinput">Trạng thái</label>
-                                    <select type="text" id="trang_thai" name="trang_thai" class="form-control">
-                                        <option value="1">Đang hoạt động</option>
-                                        <option value="0">Khoá</option>
-
-                                    </select>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="save_form">Save changes</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
@@ -99,10 +24,81 @@
                         </a>
                     </form>
                 </div>
-                <h4 class="page-title">Tài khoản</h4>
+                <h4 class="page-title">Độc giả</h4>
             </div>
         </div>
     </div>
+    <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="fullWidthModalLabel">Tài khoản</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="sach">
+                        <div class="row">
+                            @csrf
+                            <div class="col-lg-6" hidden >
+                                <div class="form-group">
+                                    <label for="simpleinput">Mã độc giả</label>
+                                    <input type="text" id="ma_doc_gia" name="ma_doc_gia" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="simpleinput">Tên độc giả</label>
+                                    <input type="text" id="ten_doc_gia" name="ten_doc_gia" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="simpleinput">Ngày sinh</label>
+                                    <input type="text" id="ngay_sinh" name="ngay_sinh" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="simpleinput">Địa chỉ </label>
+                                    <input type="text" id="dia_chi" name="dia_chi" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="simpleinput">Ngày lập thẻ </label>
+                                    <input type="text" id="created_at" name="created_at" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="simpleinput">Loại độc giả</label>
+                                    <select type="text" id="loai_doc_gia" name="loai_doc_gia" class="form-control">
+                                        <option value="1">Admin</option>
+                                        <option value="2">Nhân viên</option>
+                                        {{-- @foreach ($doc_gias as $item)
+                                            <option value="{{ $item->ma_doc_gia }}">{{ $item->ma_doc_gia }} -
+                                                {{ $item->ten_doc_gia }}
+                                            </option>
+                                        @endforeach --}}
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save_form">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
@@ -111,7 +107,7 @@
                     <div class="row mb-2">
                         <div class="col-sm-4">
                             <button class="btn btn-success" data-toggle="modal" id="add"
-                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm tài khoản </button>
+                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm độc giả </button>
 
 
                         </div>
@@ -129,10 +125,9 @@
                             <tr>
                                 <th></th>
                                 <th>Họ tên</th>
-                                <th>Tên đăng nhập</th>
-                                <th>Loại tài khoản</th>
-                                <th>Trạng thái</th>
-
+                                <th>Ngày sinh</th>
+                                <th>Loại độc giả</th>
+                                <th>Địa chỉ</th>
                                 <th>Người tạo</th>
                                 <th>Ngày tạo</th>
 
@@ -163,7 +158,7 @@
                     },
                 },
                 ajax: {
-                    url: "{{ route('admin.tai-khoan.all') }}",
+                    url: "{{ route('admin.doc-gia.all') }}",
                     type: "GET",
                     dataSrc: function(json) {
                         console.log(json);
@@ -181,40 +176,31 @@
                     [0, 'desc']
                 ],
                 columns: [{
-                        data: 'ma_tai_khoan',
+                        data: 'ma_doc_gia',
                         render: function() {
                             return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline "></i></button>';
                         }
                     },
                     {
-                        data: 'ho_ten'
+                        data: 'ten_doc_gia'
                     },
                     {
-                        data: 'ten_tai_khoan'
-                    },
-                    {
-                        data: 'ma_vai_tro',
-                        render:function(data) {
-                            if(data  == 1) {
-                                return '<span class="badge badge-warning"> Admin </span>';
-                            }else {
-                                return '<span class="badge badge-danger"> Nhân viên </span>';
-                            }
+                        data: 'ngay_sinh',
+                        render: function(data) {
+                            return data?  moment(data).format('DD/MM/YYYY') : '';
                         }
                     },
                     {
-                        data: 'trang_thai',
-                        render:function(data) {
-                            if(data  == 1) {
-                                return '<span class="badge badge-success"> Đang hoạt động </span>';
-                            }else {
-                                return '<span class="badge badge-danger"> Đã khoá </span>';
-                            }
-                        }
+                        data: 'ma_loai',
+
+                    },
+                    {
+                        data: 'dia_chi',
+
                     },
 
                     {
-                        data: 'nguoi_tao'
+                        data: 'email'
                     },
 
                     {

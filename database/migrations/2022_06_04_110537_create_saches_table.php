@@ -19,11 +19,10 @@ class CreateSachesTable extends Migration
             $table->string('ma_tac_gia');
             $table->string('ma_trang_thai');
             $table->string('ma_nxb');
+            $table->dateTime('nam_xuat_ban');
             $table->string('ma_loai');
             $table->integer('gia_tri');
             $table->string('ma_nhan_vien');
-
-
             $table->string('create_by');
             $table->string('update_by');
             $table->softDeletes();

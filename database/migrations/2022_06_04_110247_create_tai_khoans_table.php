@@ -17,6 +17,7 @@ class CreateTaiKhoansTable extends Migration
             $table->id('ma_tai_khoan');
             $table->string('ten_tai_khoan');
             $table->string('mat_khau');
+            $table->string('ho_ten');
             $table->string('create_by');
             $table->string('update_by');
             $table->timestamps();
