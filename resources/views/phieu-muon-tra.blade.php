@@ -83,8 +83,7 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control form-control-light"
-                                    id="dash-daterange">
+                                <input type="text" class="form-control form-control-light" id="dash-daterange">
                                 <div class="input-group-append">
                                     <span class="input-group-text bg-success border-success text-white">
                                         <i class="mdi mdi-calendar-range font-13"></i>
@@ -186,19 +185,24 @@
                 columns: [{
                         data: 'ma_phieu',
                         render: function() {
-                            return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline "></i></button>';
+                            return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline "></i></button>' +
+                                ' <button class="btn btn-danger btn-delete"><i class="mdi mdi-delete-outline "></i></button>';
                         }
                     },
                     {
                         data: 'ten_doc_gia',
-                          render: function(data, meta, row) {
+                        render: function(data, meta, row) {
                             console.log(row.ma_trang_thai);
-                            if (row.ma_trang_thai  == 1) {
-                                return data +  '<br><span class="badge badge-success-lighten">Đã trả</span>';
-                            } if (row.ma_trang_thai  == 2) {
-                                return data + '<br><span class="badge badge-warning-lighten">Đã mượn</span>';
+                            if (row.ma_trang_thai == 1) {
+                                return data +
+                                    '<br><span class="badge badge-success-lighten">Đã trả</span>';
+                            }
+                            if (row.ma_trang_thai == 2) {
+                                return data +
+                                    '<br><span class="badge badge-warning-lighten">Đã mượn</span>';
                             } else {
-                                return data + '<br><span class="badge badge-danger-lighten">Đã mất</span>';
+                                return data +
+                                    '<br><span class="badge badge-danger-lighten">Đã mất</span>';
 
                             }
                         }
@@ -210,13 +214,13 @@
                     {
                         data: 'ngay_muon',
                         render: function(data) {
-                            return data?  moment(data).format('DD/MM/YYYY') : '';
+                            return data ? moment(data).format('DD/MM/YYYY') : '';
                         }
                     },
                     {
                         data: 'ngay_tra',
                         render: function(data) {
-                            return data?  moment(data).format('DD/MM/YYYY') : '';
+                            return data ? moment(data).format('DD/MM/YYYY') : '';
                         }
                         // render: function(data, meta, row) {
                         //     if (row.ma_trang_thai % 2 == 0) {
@@ -264,6 +268,48 @@
 
                             $('#sach select[name=' + key + "]").select2();
                         }
+
+                    });
+                    $(document).on('click', '.btn-delete', function() {
+
+                        var data = table.row($(this).closest("tr")).data();
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then(result => {
+                            if (result.value) {
+                                $.ajaxSetup({
+                                    headers: {
+                                        "X-CSRF-TOKEN": $(
+                                            'meta[name="csrf-token"]').attr(
+                                            "content")
+                                    }
+                                });
+
+                                var url =
+                                    "{{ route('admin.phieu-muon-tra.destroy', ['phieu_muon_tra' => ':id']) }}";
+                                url = url.replace(':id', data.ma_phieu);
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: url,
+                                    data: data,
+                                    success: function(data) {
+                                        Swal.fire("Successfull", data
+                                            .message, "success");
+                                        table.ajax.reload();
+                                    },
+                                    error: function(data) {
+                                        response_error(data);
+                                    }
+                                });
+                            }
+                        });
+
 
                     });
                     $('#add').click(function() {

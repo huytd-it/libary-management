@@ -16,7 +16,7 @@
                     <form action="" id="sach">
                         <div class="row">
                             @csrf
-                            <div class="col-lg-6" hidden >
+                            <div class="col-lg-6" hidden>
                                 <div class="form-group">
                                     <label for="simpleinput">Mã tài khoản</label>
                                     <input type="text" id="ma_tai_khoan" name="ma_tai_khoan" class="form-control">
@@ -85,8 +85,7 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control form-control-light"
-                                    id="dash-daterange">
+                                <input type="text" class="form-control form-control-light" id="dash-daterange">
                                 <div class="input-group-append">
                                     <span class="input-group-text bg-success border-success text-white">
                                         <i class="mdi mdi-calendar-range font-13"></i>
@@ -111,7 +110,8 @@
                     <div class="row mb-2">
                         <div class="col-sm-4">
                             <button class="btn btn-success" data-toggle="modal" id="add"
-                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm tài khoản </button>
+                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm tài khoản
+                            </button>
 
 
                         </div>
@@ -183,7 +183,8 @@
                 columns: [{
                         data: 'ma_tai_khoan',
                         render: function() {
-                            return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline "></i></button>';
+                            return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline "></i></button>' +
+                                ' <button class="btn btn-danger btn-delete"><i class="mdi mdi-delete-outline "></i></button>';
                         }
                     },
                     {
@@ -194,20 +195,20 @@
                     },
                     {
                         data: 'ma_vai_tro',
-                        render:function(data) {
-                            if(data  == 1) {
+                        render: function(data) {
+                            if (data == 1) {
                                 return '<span class="badge badge-warning"> Admin </span>';
-                            }else {
+                            } else {
                                 return '<span class="badge badge-danger"> Nhân viên </span>';
                             }
                         }
                     },
                     {
                         data: 'trang_thai',
-                        render:function(data) {
-                            if(data  == 1) {
+                        render: function(data) {
+                            if (data == 1) {
                                 return '<span class="badge badge-success"> Đang hoạt động </span>';
-                            }else {
+                            } else {
                                 return '<span class="badge badge-danger"> Đã khoá </span>';
                             }
                         }
@@ -220,7 +221,7 @@
                     {
                         data: 'created_at',
                         render: function(data) {
-                            return data?  moment(data).format('DD/MM/YYYY') : '';
+                            return data ? moment(data).format('DD/MM/YYYY') : '';
                         }
                     },
 
@@ -239,6 +240,48 @@
 
                             $('#sach select[name=' + key + "]").select2();
                         }
+
+                    });
+                    $(document).on('click', '.btn-delete', function() {
+
+                        var data = table.row($(this).closest("tr")).data();
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then(result => {
+                            if (result.value) {
+                                $.ajaxSetup({
+                                    headers: {
+                                        "X-CSRF-TOKEN": $(
+                                            'meta[name="csrf-token"]').attr(
+                                            "content")
+                                    }
+                                });
+
+                                var url =
+                                    "{{ route('admin.tai-khoan.destroy', ['tai_khoan' => ':id']) }}";
+                                url = url.replace(':id', data.ma_tai_khoan);
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: url,
+                                    data: data,
+                                    success: function(data) {
+                                        Swal.fire("Successfull", data
+                                            .message, "success");
+                                        table.ajax.reload();
+                                    },
+                                    error: function(data) {
+                                        response_error(data);
+                                    }
+                                });
+                            }
+                        });
+
 
                     });
                     $('#add').click(function() {

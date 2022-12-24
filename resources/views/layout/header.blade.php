@@ -82,6 +82,12 @@
                         <span> Độc giả </span>
                     </a>
                 </li>
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.cai-dat.index') }}" class="side-nav-link">
+                        <i class=" mdi mdi-settings"></i>
+                        <span>  Cài đặt </span>
+                    </a>
+                </li>
                 {{-- <li class="side-nav-item">
                     <a href="apps-chat.html" class="side-nav-link">
                         <i class="uil-comments-alt"></i>

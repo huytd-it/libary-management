@@ -39,10 +39,10 @@
                     <form action="" id="sach">
                         <div class="row">
                             @csrf
-                            <div class="col-lg-6" >
+                            <div class="col-lg-6" hidden>
                                 <div class="form-group">
                                     <label for="simpleinput">Mã độc giả</label>
-                                    <input type="text" id="ma_doc_gia" name="ma_doc_gia" class="form-control">
+                                    <input type="text" id="ma_doc_gia"   name="ma_doc_gia" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -104,53 +104,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div id="setting" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="fullWidthModalLabel">Độc giả</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body">
-                <form action="" id="setting">
-                    <div class="row">
-                        @csrf
-                        <div class="col-lg-6" >
-                            <div class="form-group">
-                                <label for="simpleinput">Mã độc giả</label>
-                                <input type="text" id="ma_doc_gia" name="ma_doc_gia" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="simpleinput">Tên độc giả</label>
-                                <input type="text" id="ten_doc_gia" name="ten_doc_gia" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="simpleinput">Ngày sinh</label>
-                                <input type="text" id="ngay_sinh" name="ngay_sinh" class="form-control">
-                            </div>
-                        </div>
 
-
-
-
-
-
-                    </div>
-                </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="save_form">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
@@ -159,19 +113,19 @@
                     <div class="row mb-2">
                         <div class="col-sm-4">
                             <button class="btn btn-success" data-toggle="modal" id="add"
-                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Setting
+                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm độc giả
                             </button>
 
 
                         </div>
-                        <div class="col-sm-8">
+                        {{-- <div class="col-sm-8">
                             <div class="text-sm-right">
-                                <button type="button" class="btn btn-success mb-2 mr-1" data-toggle="modal"  data-target="#setting"><i
-                                        class="mdi mdi-settings"></i></button>
+                                <button type="button" class="btn btn-success mb-2 mr-1" data-toggle="modal"
+                                    data-target="#setting"><i class="mdi mdi-settings"></i></button>
                                 <button type="button" class="btn btn-light mb-2 mr-1">Import</button>
                                 <button type="button" class="btn btn-light mb-2">Export</button>
                             </div>
-                        </div><!-- end col-->
+                        </div><!-- end col--> --}}
                     </div>
                     <table id="basic-datatable" class="table dt-responsive nowrap ">
                         <thead>
@@ -231,10 +185,10 @@
                 columns: [{
                         data: 'ma_doc_gia',
                         render: function() {
-                            return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline "></i></button>';
-                        }
-                    },
-                    {
+                            return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline "></i></button>' +
+                                ' <button class="btn btn-danger btn-delete"><i class="mdi mdi-delete-outline "></i></button>';
+                        },
+                    }, {
                         data: 'ten_doc_gia'
                     },
                     {
@@ -289,6 +243,49 @@
                             .created_at));
 
                     });
+                    $(document).on('click', '.btn-delete', function() {
+
+                        var data = table.row($(this).closest("tr")).data();
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then(result => {
+                            if (result.value) {
+                                $.ajaxSetup({
+                                    headers: {
+                                        "X-CSRF-TOKEN": $(
+                                                'meta[name="csrf-token"]')
+                                            .attr(
+                                                "content")
+                                    }
+                                });
+
+                                var url =
+                                    "{{ route('admin.doc-gia.destroy', ['doc_gium' => ':id']) }}";
+                                url = url.replace(':id', data.ma_doc_gia);
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: url,
+                                    data: data,
+                                    success: function(data) {
+                                        Swal.fire("Successfull", data
+                                            .message, "success");
+                                        table.ajax.reload();
+                                    },
+                                    error: function(data) {
+                                        response_error(data);
+                                    }
+                                });
+                            }
+                        });
+
+
+                    });
                     // $('#add').click(function() {
                     //     $('#sach').trigger('reset');
                     //     $('#sach [name=trang_thai]').val(1);
@@ -323,8 +320,10 @@
 
             $('#save_form').click(function() {
                 var form_data = new FormData($("#sach")[0]);
-                form_data.set('created_at',$('#created_at').data('daterangepicker').startDate.format('YYYY-MM-DD hh:mm:ss'));
-                form_data.set('ngay_sinh',$('#ngay_sinh').data('daterangepicker').startDate.format('YYYY-MM-DD hh:mm:ss') );
+                form_data.set('created_at', $('#created_at').data('daterangepicker').startDate.format(
+                    'YYYY-MM-DD hh:mm:ss'));
+                form_data.set('ngay_sinh', $('#ngay_sinh').data('daterangepicker').startDate.format(
+                    'YYYY-MM-DD hh:mm:ss'));
                 var url = "{{ route('admin.doc-gia.store') }}";
                 saveFormData(url, form_data, function(res) {
                     table.ajax.reload();

@@ -18,7 +18,7 @@ class SachController extends Controller
 {
     public function getAll()
     {
-        $book = DB::table('saches as S')
+        $book = DB::table('saches as S')->whereNull('S.deleted_at')
             ->join('tac_gias as T', 'T.ma_tac_gia', '=', 'S.ma_tac_gia')
             ->leftJoin('trang_thai_saches as TT', 'TT.ma_trang_thai', '=', 'S.ma_trang_thai')
             ->leftJoin('nha_xuat_bans as N', 'N.ma_nxb', '=', 'S.ma_nxb')
@@ -94,5 +94,10 @@ class SachController extends Controller
 
 
         return response()->json($msg);
+    }
+    public function destroy($id)
+    {
+        Sach::find($id)->delete();
+        return response()->json(['message' => 'Xoá thành công']);
     }
 }

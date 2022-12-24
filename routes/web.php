@@ -5,6 +5,7 @@ use App\Http\Controllers\DocGiaController;
 use App\Http\Controllers\LoaiSachController;
 use App\Http\Controllers\PhieuMuonTraController;
 use App\Http\Controllers\SachController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TaiKhoanController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,7 @@ Route::middleware(['web', 'guest'])->group(function () {
                     'tai-khoan' => TaiKhoanController::class,
                     'doc-gia' => DocGiaController::class,
                     'loai-sach' => LoaiSachController::class,
+                    'cai-dat' => SettingController::class
                 ]);
 
                 Route::prefix('/sach')->group(function () {

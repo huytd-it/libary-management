@@ -203,7 +203,8 @@
             columns: [{
                     data: null,
                     render: function() {
-                        return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline btn-edit"></i></button>';
+                        return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline btn-edit"></i></button>' +
+                            ' <button class="btn btn-danger btn-delete"><i class="mdi mdi-delete-outline "></i></button>';
                     }
                 }, {
                     data: 'ten_sach'
@@ -269,6 +270,49 @@
                 $('#add').click(function() {
                     $('#sach')[0].trigger('reset');
                 });
+                $(document).on('click', '.btn-delete', function() {
+
+                    var data = table.row($(this).closest("tr")).data();
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!"
+                    }).then(result => {
+                        if (result.value) {
+                            $.ajaxSetup({
+                                headers: {
+                                    "X-CSRF-TOKEN": $(
+                                            'meta[name="csrf-token"]')
+                                        .attr(
+                                            "content")
+                                }
+                            });
+
+                            var url =
+                                "{{ route('admin.sach.destroy', ['sach' => ':id']) }}";
+                            url = url.replace(':id', data.ma_sach);
+                            $.ajax({
+                                type: "DELETE",
+                                url: url,
+                                data: data,
+                                success: function(data) {
+                                    Swal.fire("Successfull", data
+                                        .message, "success");
+                                    table.ajax.reload();
+                                },
+                                error: function(data) {
+                                    response_error(data);
+                                }
+                            });
+                        }
+                    });
+
+
+                });
             }
 
 
@@ -285,7 +329,8 @@
 
         $('#save_form').click(function() {
             var form_data = new FormData($("#sach")[0]);
-            form_data.set('nam_xuat_ban',$('#nam_xuat_ban').data('daterangepicker').startDate.format('YYYY-MM-DD hh:mm:ss') );
+            form_data.set('nam_xuat_ban', $('#nam_xuat_ban').data('daterangepicker').startDate.format(
+                'YYYY-MM-DD hh:mm:ss'));
             var url = "{{ route('admin.sach.store') }}";
             saveFormData(url, form_data, function(res) {
                 table.ajax.reload();

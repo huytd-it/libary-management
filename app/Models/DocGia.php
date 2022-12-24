@@ -11,5 +11,5 @@ class DocGia extends Model
     use HasFactory, SoftDeletes;
     protected $table = 'doc_gias';
     protected $primaryKey = 'ma_doc_gia';
-    protected $fillable = ['ma_doc_gia', 'ten_doc_gia', 'ngay_sinh', 'dia_chi', 'email', 'ma_loai', 'create_by', 'update_by'];
+    protected $fillable = [ 'ten_doc_gia', 'ngay_sinh', 'dia_chi', 'email', 'ma_loai', 'create_by', 'update_by', 'created_at'];
 }
