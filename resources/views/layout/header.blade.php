@@ -59,6 +59,12 @@
                     </a>
                 </li>
                 <li class="side-nav-item">
+                    <a href="{{ route('admin.loai-sach.index') }}" class="side-nav-link">
+                        <i class="uil  uil-book-reader"></i>
+                        <span> Thể loại sách </span>
+                    </a>
+                </li>
+                <li class="side-nav-item">
                     <a href="{{ route('admin.phieu-muon-tra.index') }}" class="side-nav-link">
                         <i class=" uil-exchange"></i>
                         <span> Mượn trả </span>

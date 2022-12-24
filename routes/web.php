@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DangNhapController;
 use App\Http\Controllers\DocGiaController;
+use App\Http\Controllers\LoaiSachController;
 use App\Http\Controllers\PhieuMuonTraController;
 use App\Http\Controllers\SachController;
 use App\Http\Controllers\TaiKhoanController;
@@ -41,12 +42,18 @@ Route::middleware(['web', 'guest'])->group(function () {
                     'sach' => SachController::class,
                     'phieu-muon-tra' => PhieuMuonTraController::class,
                     'tai-khoan' => TaiKhoanController::class,
-                    'doc-gia' => DocGiaController::class
+                    'doc-gia' => DocGiaController::class,
+                    'loai-sach' => LoaiSachController::class,
                 ]);
 
                 Route::prefix('/sach')->group(function () {
                     Route::name('sach.')->group(function () {
                         Route::get('/all/get', [SachController::class, 'getAll'])->name('all');
+                    });
+                });
+                Route::prefix('/loai-sach')->group(function () {
+                    Route::name('loai-sach.')->group(function () {
+                        Route::get('/all/get', [LoaiSachController::class, 'getAll'])->name('all');
                     });
                 });
                 Route::prefix('/phieu-muon-tra')->group(function () {
