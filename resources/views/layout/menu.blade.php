@@ -212,9 +212,12 @@
                 <span class="account-user-avatar">
                     <img src="{{asset('assets/images/users/avatar-1.jpg') }}" alt="user-image" class="rounded-circle">
                 </span>
+                @php
+                    $user = Auth::user();
+                @endphp
                 <span>
-                    <span class="account-user-name">Dominic Keller</span>
-                    <span class="account-position">Founder</span>
+                    <span class="account-user-name">{{ $user->ho_ten }}</span>
+                    <span class="account-position">{{ $user->ma_vai_tro == 1? 'Admin' : 'Nhân viên'}}</span>
                 </span>
             </a>
             <div
@@ -231,7 +234,7 @@
                 </a>
 
                 <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                <a href="{{ route('admin.cai-dat.index') }}" class="dropdown-item notify-item">
                     <i class="mdi mdi-account-edit mr-1"></i>
                     <span>Settings</span>
                 </a>

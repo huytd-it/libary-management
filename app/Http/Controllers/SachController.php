@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LoaiSach;
 use App\Models\NhaXuatBan;
 use App\Models\Sach;
+use App\Models\Setting;
 use App\Models\TacGia;
 use App\Models\TrangThaiSach;
 use Illuminate\Http\Request;
@@ -16,6 +17,11 @@ use Yajra\DataTables\DataTables;
 
 class SachController extends Controller
 {
+    private $setting;
+    public function __construct()
+    {
+        $this->setting = Setting::getSetting();
+    }
     public function getAll()
     {
         $book = DB::table('saches as S')->whereNull('S.deleted_at')
@@ -51,7 +57,7 @@ class SachController extends Controller
     public function store(Request $request)
     {
 
-       // QĐ2: Có 3 thể loại (A, B, C). Chỉ nhận các sách trong vòng 8 năm.
+        // QĐ2: Có 3 thể loại (A, B, C). Chỉ nhận các sách trong vòng 8 năm.
         $validator = Validator::make($request->all(), [
             'ten_sach' => 'required',
             'ma_tac_gia' => 'required',
@@ -59,24 +65,25 @@ class SachController extends Controller
             'ma_loai' => 'required',
             'gia_tri' => 'required',
             'ma_nxb' => 'required',
-            'nam_xuat_ban' =>'required'
+            'nam_xuat_ban' => 'required'
         ]);
-        if(count($validator->errors()) > 0) {
+        if (count($validator->errors()) > 0) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
         //nhận sách trong vòng 8 năm
+        $nam_xuat_ban_toi_da = $this->setting['nam_xuat_ban'];
         $nam_xuat_ban = Carbon::parse($request->nam_xuat_ban);
         $tuoi = $nam_xuat_ban->diffInYears(Carbon::now());
 
-        if($tuoi > 8) {
-            return response()->json(['message' => 'Chỉ nhận sách tròng vòng 8 năm'], 400);
+        if ($tuoi > $nam_xuat_ban_toi_da) {
+            return response()->json(['message' => "Chỉ nhận sách tròng vòng {$nam_xuat_ban_toi_da } năm"], 400);
         }
         $user = Auth::user();
         $exist = Sach::where('ma_sach', $request->ma_sach)->first();
         if (isset($exist)) {
             $msg = ['message' => 'Cập nhật sách thành công'];
-        }else {
+        } else {
             $msg = ['message' => 'Thêm sách thành công'];
         }
         $sach =  Sach::updateOrCreate(['ma_sach' => $request->ma_sach], [

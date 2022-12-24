@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
             'gia_tri' => '6'
         ]);
         Setting::create([
-            'ten' => 'Số sách đượn mượn tối đa',
+            'ten' => 'Số sách được mượn tối đa',
             'ten_thay_the' => 'so_sach_muon_toi_da',
             'gia_tri' => '4'
         ]);
@@ -98,6 +98,11 @@ class DatabaseSeeder extends Seeder
             'ten' => 'Số ngày được mượn tối đa',
             'ten_thay_the' => 'so_ngay_muon_toi_da',
             'gia_tri' => '5'
+        ]);
+        Setting::create([
+            'ten' => 'Khoảng cách năm xuất bản',
+            'ten_thay_the' => 'nam_xuat_ban',
+            'gia_tri' => '8'
         ]);
     }
 }
