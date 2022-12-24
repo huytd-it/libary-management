@@ -69,7 +69,7 @@ class SachController extends Controller
         $nam_xuat_ban = Carbon::parse($request->nam_xuat_ban);
         $tuoi = $nam_xuat_ban->diffInYears(Carbon::now());
 
-        if($tuoi <= 8) {
+        if($tuoi > 8) {
             return response()->json(['message' => 'Chỉ nhận sách tròng vòng 8 năm'], 400);
         }
         $user = Auth::user();
