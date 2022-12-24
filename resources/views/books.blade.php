@@ -3,7 +3,9 @@
 @endsection
 @section('content')
     <!-- Full width modal -->
-
+    @php
+        $user = Auth::user();
+    @endphp
     <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -128,13 +130,20 @@
                 <div class="card-body">
 
                     <div class="row mb-2">
-                        <div class="col-sm-4">
-                            <button class="btn btn-success" data-toggle="modal" id="add"
-                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm sách
-                            </button>
+                       @auth
+                       <div class="col-sm-4">
+                        <button class="btn btn-success" data-toggle="modal" id="add"
+                            data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm sách
+                        </button>
 
 
-                        </div>
+                    </div>
+                       @endauth
+
+
+
+
+
                         {{-- <div class="col-sm-8">
                             <div class="text-sm-right">
                                 <button type="button" class="btn btn-success mb-2 mr-1"><i
@@ -144,10 +153,28 @@
                             </div>
                         </div><!-- end col--> --}}
                     </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="simpleinput">Loại sách</label>
+                                <select type="text" id="ma_loai_filter" name="ma_loai" class="form-control">
+                                    <option value="">-- Chọn ---</option>
+                                    @foreach ($loai_sach as $item)
+                                        <option value="{{ $item->ma_loai }}">{{ $item->ten_loai_sach }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <table id="books" class="table dt-responsive nowrap ">
                         <thead>
                             <tr>
-                                <th></th>
+                               @auth
+                               <th></th>
+                               @endauth
+
+
                                 <th>Tên Sách</th>
                                 <th>Tên tác giả</th>
                                 <th>Trạng thái</th>
@@ -169,7 +196,11 @@
 @endsection
 @section('js')
     <!-- Datatable Init js -->
+
+
     <script type="text/javascript">
+
+
         var table = $('#books').DataTable({
             retrieve: true,
             processing: true,
@@ -182,7 +213,7 @@
             pageLength: 0,
             select: true,
             ajax: {
-                url: "{{ route('admin.sach.all') }}",
+                url: "{{ route('sach.all') }}",
                 type: "GET",
                 dataSrc: function(json) {
                     console.log(json);
@@ -190,133 +221,140 @@
                 },
                 data: function(data) {
                     data._token = $("input[name=_token]").val();
-                    data.parent_id = $("#parent_id_filter").val();
-                    data.language = $("#language_filter").val();
-                    data.school_key = $("#school_key_filter").val();
-                    data.deleted_at = $("#deleted_at_filter").val();
+                    data.ma_loai = $("#ma_loai_filter").val();
                 },
             },
+
             order: [
-                [9, 'desc']
+                [8, 'desc']
             ],
+
             "lengthChange": true,
-            columns: [{
+            columns: [
+                @auth {
                     data: null,
                     render: function() {
                         return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline btn-edit"></i></button>' +
                             ' <button class="btn btn-danger btn-delete"><i class="mdi mdi-delete-outline "></i></button>';
                     }
-                }, {
-                    data: 'ten_sach'
                 },
-                {
-                    data: 'ten_tac_gia'
-                },
-                {
-                    data: 'ten_trang_thai',
-                    render: function(data, meta, row) {
-                        if (row.ma_trang_thai % 2 == 0) {
-                            return '<span class="badge badge-danger-lighten">' + data + '</span>';
-                        } else {
-                            return '<span class=" badge badge-info-lighten">' + data + '</span>';
+            @endauth
 
-                        }
+            {
+                data: 'ten_sach'
+            },
+            {
+                data: 'ten_tac_gia'
+            },
+            {
+                data: 'ten_trang_thai',
+                render: function(data, meta, row) {
+                    if (row.ma_trang_thai % 2 == 0) {
+                        return '<span class="badge badge-danger-lighten">' + data + '</span>';
+                    } else {
+                        return '<span class=" badge badge-info-lighten">' + data + '</span>';
+
                     }
-                },
-                {
-                    data: 'ten_loai_sach',
+                }
+            },
+            {
+                data: 'ten_loai_sach',
 
-                },
-                {
-                    data: 'ten_nxb'
-                },
+            },
+            {
+                data: 'ten_nxb'
+            },
 
-                {
-                    data: 'nam_xuat_ban',
-                    render: function(data) {
-                        return data ? moment(data).format('DD/MM/YYYY') : '';
+            {
+                data: 'nam_xuat_ban',
+                render: function(data) {
+                    return data ? moment(data).format('DD/MM/YYYY') : '';
+                }
+            },
+            {
+                data: 'gia_tri',
+                render: function(data) {
+                    return new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                    }).format(data);
+                }
+            },
+            {
+                data: 'created_at'
+            },
+            {
+                data: 'updated_at'
+            },
+
+        ],
+        drawCallback: function() {
+            $('#sach select, [name=ma_loai]').select2();
+
+            $(document).on('click', '.btn-edit', function() {
+
+                $('#full-width-modal').modal('show');
+                var data = table.row($(this).closest("tr")).data();
+                console.log(data);
+                for (const [key, value] of Object.entries(data)) {
+                    $('#sach [name=' + key + "]").val(value);
+                }
+                $('#nam_xuat_ban').data('daterangepicker').setStartDate(new Date(data
+                    .nam_xuat_ban));
+            });
+            $('#add').click(function() {
+                $('#sach')[0].trigger('reset');
+            });
+            $(document).on('click', '.btn-delete', function() {
+
+                var data = table.row($(this).closest("tr")).data();
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then(result => {
+                    if (result.value) {
+                        $.ajaxSetup({
+                            headers: {
+                                "X-CSRF-TOKEN": $(
+                                        'meta[name="csrf-token"]')
+                                    .attr(
+                                        "content")
+                            }
+                        });
+
+                        var url =
+                            "{{ route('admin.sach.destroy', ['sach' => ':id']) }}";
+                        url = url.replace(':id', data.ma_sach);
+                        $.ajax({
+                            type: "DELETE",
+                            url: url,
+                            data: data,
+                            success: function(data) {
+                                Swal.fire("Successfull", data
+                                    .message, "success");
+                                table.ajax.reload();
+                            },
+                            error: function(data) {
+                                response_error(data);
+                            }
+                        });
                     }
-                },
-                {
-                    data: 'gia_tri',
-                    render: function(data) {
-                        return new Intl.NumberFormat('vi-VN', {
-                            style: 'currency',
-                            currency: 'VND',
-                        }).format(data);
-                    }
-                },
-                {
-                    data: 'created_at'
-                },
-                {
-                    data: 'updated_at'
-                },
-
-            ],
-            drawCallback: function() {
-                $('#sach select').select2();
-                $(document).on('click', '.btn-edit', function() {
-
-                    $('#full-width-modal').modal('show');
-                    var data = table.row($(this).closest("tr")).data();
-                    console.log(data);
-                    for (const [key, value] of Object.entries(data)) {
-                        $('#sach [name=' + key + "]").val(value);
-                    }
-                    $('#nam_xuat_ban').data('daterangepicker').setStartDate(new Date(data
-                        .nam_xuat_ban));
                 });
-                $('#add').click(function() {
-                    $('#sach')[0].trigger('reset');
-                });
-                $(document).on('click', '.btn-delete', function() {
-
-                    var data = table.row($(this).closest("tr")).data();
-                    Swal.fire({
-                        title: "Are you sure?",
-                        text: "You won't be able to revert this!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, delete it!"
-                    }).then(result => {
-                        if (result.value) {
-                            $.ajaxSetup({
-                                headers: {
-                                    "X-CSRF-TOKEN": $(
-                                            'meta[name="csrf-token"]')
-                                        .attr(
-                                            "content")
-                                }
-                            });
-
-                            var url =
-                                "{{ route('admin.sach.destroy', ['sach' => ':id']) }}";
-                            url = url.replace(':id', data.ma_sach);
-                            $.ajax({
-                                type: "DELETE",
-                                url: url,
-                                data: data,
-                                success: function(data) {
-                                    Swal.fire("Successfull", data
-                                        .message, "success");
-                                    table.ajax.reload();
-                                },
-                                error: function(data) {
-                                    response_error(data);
-                                }
-                            });
-                        }
-                    });
 
 
-                });
-            }
+            });
+        }
 
 
 
+        });
+        $('#ma_loai_filter').change(function() {
+            table.ajax.reload();
         });
         $('#nam_xuat_ban').daterangepicker({
             "singleDatePicker": true,

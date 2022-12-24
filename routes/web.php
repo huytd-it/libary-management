@@ -22,10 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('dang-nhap', function () {
     return view('dang-nhap');
-});
-Route::get('/', function () {
-    return view('dang-nhap');
-})->name('home');
+})->name('dang-nhap');
+Route::get('/',[SachController::class, 'index'])->name('home');
 Route::get('dang-xuat', [DangNhapController::class, 'logout'])->name('dang-xuat');
 Route::prefix('/api')->group(function () {
     Route::name('api.')->group(function () {
@@ -33,6 +31,11 @@ Route::prefix('/api')->group(function () {
 
     });
 
+});
+Route::prefix('/sach')->group(function () {
+    Route::name('sach.')->group(function () {
+        Route::get('/all/get', [SachController::class, 'getAll'])->name('all');
+    });
 });
 
 Route::middleware(['web', 'guest'])->group(function () {
@@ -48,11 +51,11 @@ Route::middleware(['web', 'guest'])->group(function () {
                     'cai-dat' => SettingController::class
                 ]);
 
-                Route::prefix('/sach')->group(function () {
-                    Route::name('sach.')->group(function () {
-                        Route::get('/all/get', [SachController::class, 'getAll'])->name('all');
-                    });
-                });
+                // Route::prefix('/sach')->group(function () {
+                //     Route::name('sach.')->group(function () {
+                //         Route::get('/all/get', [SachController::class, 'getAll'])->name('all');
+                //     });
+                // });
                 Route::prefix('/loai-sach')->group(function () {
                     Route::name('loai-sach.')->group(function () {
                         Route::get('/all/get', [LoaiSachController::class, 'getAll'])->name('all');

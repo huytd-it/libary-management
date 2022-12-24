@@ -22,7 +22,7 @@ class SachController extends Controller
     {
         $this->setting = Setting::getSetting();
     }
-    public function getAll()
+    public function getAll(Request $request)
     {
         $book = DB::table('saches as S')->whereNull('S.deleted_at')
             ->join('tac_gias as T', 'T.ma_tac_gia', '=', 'S.ma_tac_gia')
@@ -30,13 +30,25 @@ class SachController extends Controller
             ->leftJoin('nha_xuat_bans as N', 'N.ma_nxb', '=', 'S.ma_nxb')
             ->leftJoin('loai_saches as LS', 'LS.ma_loai', '=', 'S.ma_loai')
             ->select([
-                'S.*', 'T.ten_tac_gia', 'T.ma_tac_gia', 'TT.ten_trang_thai',
-                'TT.ma_trang_thai', 'N.ten_nxb', 'N.ma_nxb', 'LS.ma_loai', 'LS.ten_loai_sach'
+                'S.*',
+                'T.ten_tac_gia',
+                'T.ma_tac_gia',
+                'TT.ten_trang_thai',
+                'TT.ma_trang_thai',
+                'N.ten_nxb',
+                'N.ma_nxb',
+                'LS.ma_loai',
+                'LS.ten_loai_sach'
             ])
-            ->orderByDesc('S.ma_sach')
-            ->get();
 
-        return DataTables::of($book)->make(true);
+
+            ->orderByDesc('S.ma_sach');
+
+
+        if (isset($request->ma_loai)) {
+            $book->where('S.ma_loai', $request->ma_loai);
+        }
+        return DataTables::of($book->get())->make(true);
     }
     public function index()
     {
@@ -77,7 +89,7 @@ class SachController extends Controller
         $tuoi = $nam_xuat_ban->diffInYears(Carbon::now());
 
         if ($tuoi > $nam_xuat_ban_toi_da) {
-            return response()->json(['message' => "Chỉ nhận sách tròng vòng {$nam_xuat_ban_toi_da } năm"], 400);
+            return response()->json(['message' => "Chỉ nhận sách tròng vòng {$nam_xuat_ban_toi_da} năm"], 400);
         }
         $user = Auth::user();
         $exist = Sach::where('ma_sach', $request->ma_sach)->first();

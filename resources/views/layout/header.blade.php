@@ -1,4 +1,6 @@
-     <!-- ========== Left Sidebar Start ========== -->
+
+     @auth
+            <!-- ========== Left Sidebar Start ========== -->
      <div class="left-side-menu">
 
         <!-- LOGO -->
@@ -644,3 +646,5 @@
 
     </div>
     <!-- Left Sidebar End -->
+
+     @endauth
