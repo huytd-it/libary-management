@@ -15,8 +15,8 @@
                 <div class="modal-body">
                     <form action="" id="sach">
                         <div class="row">
-                            @csrf
-                            <div class="col-lg-6" hidden >
+                            @csrf()
+                            <div class="col-lg-6" hidden>
                                 <div class="form-group">
                                     <label for="simpleinput">Mã loại</label>
                                     <input type="text" id="ma_loai" name="ma_loai" class="form-control">
@@ -50,8 +50,7 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control form-control-light"
-                                    id="dash-daterange">
+                                <input type="text" class="form-control form-control-light" id="dash-daterange">
                                 <div class="input-group-append">
                                     <span class="input-group-text bg-success border-success text-white">
                                         <i class="mdi mdi-calendar-range font-13"></i>
@@ -76,7 +75,8 @@
                     <div class="row mb-2">
                         <div class="col-sm-4">
                             <button class="btn btn-success" data-toggle="modal" id="add"
-                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm thể loại sách </button>
+                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm thể loại sách
+                            </button>
 
 
                         </div>
@@ -143,14 +143,16 @@
                 columns: [{
                         data: 'ma_loai',
                         render: function() {
-                            return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline "></i></button>';
+
+                            return '<button class="btn btn-success btn-edit"><i class="mdi mdi-square-edit-outline "></i></button>' +
+                                ' <button class="btn btn-danger btn-delete"><i class="mdi mdi-delete-outline "></i></button>';
                         }
                     },
 
                     {
                         data: 'ten_loai_sach',
-                        render:function(data) {
-                          return data;
+                        render: function(data) {
+                            return data;
                         }
                     },
 
@@ -164,13 +166,13 @@
                     {
                         data: 'created_at',
                         render: function(data) {
-                            return data?  moment(data).format('DD/MM/YYYY') : '';
+                            return data ? moment(data).format('DD/MM/YYYY') : '';
                         }
                     },
                     {
                         data: 'updated_at',
                         render: function(data) {
-                            return data?  moment(data).format('DD/MM/YYYY') : '';
+                            return data ? moment(data).format('DD/MM/YYYY') : '';
                         }
                     },
 
@@ -189,6 +191,47 @@
 
                             $('#sach select[name=' + key + "]").select2();
                         }
+
+                    });
+                    $(document).on('click', '.btn-delete', function() {
+
+                        var data = table.row($(this).closest("tr")).data();
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then(result => {
+                            if (result.value) {
+                                $.ajaxSetup({
+                                    headers: {
+                                        "X-CSRF-TOKEN": $(
+                                            'meta[name="csrf-token"]').attr(
+                                            "content")
+                                    }
+                                });
+
+                                var url = "{{ route('admin.loai-sach.destroy', ['loai_sach' => ':id']) }}";
+                                url = url.replace(':id', data.ma_loai);
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: url,
+                                    data: data,
+                                    success: function(data) {
+                                        Swal.fire("Successfull", data
+                                            .message, "success");
+                                      table.ajax.reload();
+                                    },
+                                    error: function(data) {
+                                        response_error(data);
+                                    }
+                                });
+                            }
+                        });
+
 
                     });
                     $('#add').click(function() {

@@ -20,6 +20,7 @@ class LoaiSachController extends Controller
     public function getAll()
     {
         $book = DB::table('loai_saches as L')
+            ->whereNull('L.deleted_at')
             ->join('tai_khoans as T2', 'T2.ma_tai_khoan', '=', 'L.create_by')
             ->join('tai_khoans as T', 'T.ma_tai_khoan', '=', 'L.update_by')
             ->select(['L.*', 'T2.ten_tai_khoan as nguoi_tao', 'T.ten_tai_khoan as nguoi_cap_nhat'])
@@ -59,5 +60,12 @@ class LoaiSachController extends Controller
         ]);
 
         return response()->json($msg);
+    }
+    public function destroy(LoaiSach $loaiSach)
+    {
+
+        $loaiSach->delete();
+        return response()->json(['message' => 'Xoá thành công']);
+
     }
 }

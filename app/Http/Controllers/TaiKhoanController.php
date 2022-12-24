@@ -36,10 +36,12 @@ class TaiKhoanController extends Controller
     public function getAll()
     {
         $tk = DB::table('tai_khoans as T')
+
             ->join('tai_khoans as T2', 'T.create_by', '=', 'T2.ma_tai_khoan')
             ->select(['T.ma_tai_khoan', 'T.ten_tai_khoan', 'T.ho_ten', 'T.created_at', 'T.updated_at', 'T.ma_vai_tro', 'T.trang_thai', 'T2.ten_tai_khoan as nguoi_tao'])
             ->get();
 
+        
         return DataTables::of($tk)->make(true);
     }
     public function store(Request $request)

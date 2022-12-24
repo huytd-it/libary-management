@@ -104,6 +104,53 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div id="setting" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="fullWidthModalLabel">Độc giả</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="setting">
+                    <div class="row">
+                        @csrf
+                        <div class="col-lg-6" >
+                            <div class="form-group">
+                                <label for="simpleinput">Mã độc giả</label>
+                                <input type="text" id="ma_doc_gia" name="ma_doc_gia" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="simpleinput">Tên độc giả</label>
+                                <input type="text" id="ten_doc_gia" name="ten_doc_gia" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="simpleinput">Ngày sinh</label>
+                                <input type="text" id="ngay_sinh" name="ngay_sinh" class="form-control">
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save_form">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
@@ -112,19 +159,19 @@
                     <div class="row mb-2">
                         <div class="col-sm-4">
                             <button class="btn btn-success" data-toggle="modal" id="add"
-                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Thêm độc giả
+                                data-target="#full-width-modal"><i class="mdi mdi-plus-circle mr-2"></i> Setting
                             </button>
 
 
                         </div>
-                        {{-- <div class="col-sm-8">
+                        <div class="col-sm-8">
                             <div class="text-sm-right">
-                                <button type="button" class="btn btn-success mb-2 mr-1"><i
+                                <button type="button" class="btn btn-success mb-2 mr-1" data-toggle="modal"  data-target="#setting"><i
                                         class="mdi mdi-settings"></i></button>
                                 <button type="button" class="btn btn-light mb-2 mr-1">Import</button>
                                 <button type="button" class="btn btn-light mb-2">Export</button>
                             </div>
-                        </div><!-- end col--> --}}
+                        </div><!-- end col-->
                     </div>
                     <table id="basic-datatable" class="table dt-responsive nowrap ">
                         <thead>
